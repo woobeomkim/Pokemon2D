@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73855bf3a66f4774e93a2a535127415d, type: 3}
-  m_Name: Tackle
+  m_Name: "\uB369\uAD74\uCC44\uCC0D"
   m_EditorClassIdentifier: 
-  name: Tackle
+  name: "\uB369\uAD74\uCC44\uCC0D"
   description: 
-  type: 1
-  power: 40
+  type: 5
+  power: 45
   accuracy: 100
-  pp: 35
+  pp: 25

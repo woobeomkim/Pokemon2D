@@ -1,9 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/*
+ C#의 어트리뷰트 문법을 사용한 유니티의 특수한기능 
+ScriptableObject를 유니티 에디터에서 쉽게 생성할수있도록 도와주는역할
 
+어트리뷰트는 C#에서 메타데이터(추가정보)를 클래스 메서드 필드 등에 부여하는기능
+어트리뷰트를 사용하면 컴파일러나 유니티 에디터가 해당 클래스나 필드를 특별한 방식츠로 처리가능
+ [SerializeFiled] : 유니티 인스펙터에서 편집 가능하도록 설정
+[CreateAssetMenu] : ScripatableObject를 유니티 에디터에서 생성가능하게만들음
+    fileName = 생성될 파일의 기본이름 (filename.asset)으로 저장됨,
+     menuName =  유니티 에디터에서 Create메뉴 경로 설정
+
+ CreateAssetMenu의장점 유니티 에디터에서 직접생성가능 (관리가쉬움)
+ 파일 형태로 저장되어 씬변경시에도 데이터유지됨
+ 직접 코드를 작성하는방식보다 직관적임
+
+[TextArea]는 유니티 인스펙터에서 문자열 입력필드의 크기를 조절할수 있도록 해주는 애트리뷰트
+string 타입의 변수를 다룰때 여러줄을 입력할수있도록 허용하는데 사용됨
+[TestArea]는 유니티 인스펙터에서 여러줄을 입력할수있는 텍스트 박스로 표시됨 (기본적으로 3~10줄범위로 조절가능)
+[TextAra(2,5)] : 텍스트 박스의 최소줄 :2(기본값 : 3) , 텍스트 박스의 최대줄 5(기본값 : 10)
+ */
 [CreateAssetMenu(fileName = "Pokemon",menuName = "Pokemon/Create new Pokemon")]
+/*
+ ScripableObject : 프로젝트 에셋으로 존재할수있는 데이터 컨테이너 역할을 한다.
+ MonoBehaviour와는 달리 오브젝트에 부착불가, 모노비헤이버는 씬이 로드될때마다 새로생성되지만
+ScriptableObject는 프로젝트내의 에셋파일로 저장할수있어 씬이변경되어도 데이터가유지됨
+ 전역데이터 , 설정값, 캐릭터 스택등의 저장용도로 적합 
+    Awak,Start,Update같은 유니티 생명주기함수가 호출되지않고 OnEnable,OnDisabel같은 특정이벤트함수 사용가능
 
+ScriptableObject는 유니티의 에셋 시스템을 통해 직렬화되며 동일한 ScripatableObject 인스턴스를 여러개의 오브젝트에 공유할수있어
+메모리 사용 최적화를 할수있다. (중복데티어 로드 방지가능)
+
+예시 : 게임설정데이터, 캐릭터,아이템 몬스터스텟 데이터, 대화스크립트관리, 글로벌 상태 저장(GameState,AudiMangagetr)
+
+ MonoBehaviour : 씬 안에서관리 , 씬이 바뀌면 사라짐 , 직렬화지원 (제한적 , 파일저장필요) , 메모리 효율성 (객체마다 개별저장)
+ ScriptableObject : 프로젝트(에셋) 안에서관리, 씬이 바뀌어도 유지됨 , 직렬화지원 , 여러객체가 같은 데이터 공유 가능
+ 
+OnEnable : ScripatableObject가 로드될때 실행됨
+OnDisalbe : ScripatableObject가 언로드될 때 실행됨
+OnDestroy : ScripatableObject가 삭제될떄 실행됨
+런타임동안 데이터를 공유하지만 영구저장되지는않음
+ */
 public class PokemonBase : ScriptableObject
 {
     [SerializeField] string name;

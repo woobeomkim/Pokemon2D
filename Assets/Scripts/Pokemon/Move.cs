@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Move
 {
-    MoveBase Base { get; set; }
-    int PP { get; set; }
+    public MoveBase Base { get; set; }
+    public int PP { get; set; }
 
     public Move(MoveBase pBase)
     {

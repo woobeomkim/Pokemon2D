@@ -4,6 +4,7 @@ using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 배틀하는 포켓몬을 관리하는클래스
 public class BattleUnit : MonoBehaviour
 {
     [SerializeField] PokemonBase _base;
