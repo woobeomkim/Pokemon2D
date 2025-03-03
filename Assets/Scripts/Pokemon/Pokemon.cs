@@ -9,11 +9,25 @@ public class Pokemon
 
     public int HP { get; set; }
 
+    public List<Move> Moves { get; set; }
+
     public Pokemon(PokemonBase pBase, int pLevel)
     {
         Base = pBase;
         Level = pLevel;
         HP = MaxHp;
+
+
+        // Generate Mvoes
+        Moves = new List<Move>();
+        foreach (var move in Base.LearanableMoves)
+        {
+            if (move.Level <= Level)
+                Moves.Add(new Move(move.Base));
+
+            if (Moves.Count >= 4)
+                break;
+        }
     }
 
 

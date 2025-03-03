@@ -14,6 +14,7 @@ public class PokemonBase : ScriptableObject
     [SerializeField] Sprite frontSprite;
     [SerializeField] Sprite backSprite;
 
+    //포켓몬은 최대 2개타입까지 가질수있다 (EX : 불/드래곤 리자몽)
     [SerializeField] PokemonType type1;
     [SerializeField] PokemonType type2;
 
@@ -24,6 +25,9 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int spAttack;
     [SerializeField] int spDefense;
     [SerializeField] int speed;
+
+    // 설계 : 포켓몬은 각자 배울수있는 기술이 정해져있다 (BASE클래스에 있는게맞다).
+    [SerializeField] List<LearanableMove> learanableMoves;
 
     /*
      Property는 필드값을 제어하기위한 C#의 특별한멤버
@@ -101,7 +105,26 @@ public class PokemonBase : ScriptableObject
         get { return speed; }
     }
 
+    public List<LearanableMove> LearanableMoves
+        { get { return learanableMoves; } }
+}
 
+
+// 클래스를 직렬화할때는 System.Serializable
+// 직렬화는 객체 데이터를 저장하거나 네트워크를 통해 전송할 수 있도록 변환하는 과정입니다.
+// 유니티에서는 Inspector에서 데이터를 편집하거나, JSON/파일 저장을 할 때 직렬화가 필요합니다.
+[System.Serializable]
+public class LearanableMove
+{
+    // 배울수있는 기술 클래스에는 
+    // 기술과 몇렙에 배울수있는 속성이있다.
+    [SerializeField] MoveBase moveBase;
+    [SerializeField] int level;
+
+    public MoveBase Base
+        { get { return moveBase; } }
+    public int Level
+        { get { return level; } }
 }
 
 public enum PokemonType
