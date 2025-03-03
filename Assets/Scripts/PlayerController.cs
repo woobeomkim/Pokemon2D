@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+   TilemapCollider -> 각 타일마다 충돌체를 만들어줌 ( 성능부하가큼)
+   CompositeCollider -> 각 충돌체를 하나의 큰충돌체로 만들어 성능부하를 줄임
+   Rigidbody static설정 -> 물리계산기능을꺼서 충돌할수있는 역할로만만든다.
+ */
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
@@ -41,6 +46,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isMoving",isMoving);
     }
 
+    // IEnumerator 함수가 멈춘후 다시실행하기위한 상태정보를 저장하기위한 인터페이스
     IEnumerator Move(Vector3 targetPos)
     {
         isMoving = true;
