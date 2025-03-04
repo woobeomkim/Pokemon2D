@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\uC6B8\uC74C\uC18C\uB9AC"
   description: 
-  type: 1
+  type: 0
   power: 0
   accuracy: 100
   pp: 40
