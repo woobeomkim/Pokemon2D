@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,21 @@ public class PlayerController : MonoBehaviour
     public LayerMask solidObjectsLayer;
     public LayerMask grassLayer;
 
+    // 게임컨트롤러에서 state패턴을이용해 상태를바꾸려면 
+    // 플레이어컨트롤러에서 게임컨트롤러를 참조해야는데 이미 게임컨트롤러에서 플레이어컨트롤러를 참조해 상태에따라 업데이트를하므로
+    // 플레이어에에서 게임컨트롤러를 참조하면 순환참조가 일어난다 이를 해결하기위해
+    // 이벤트를 구독하는 방식인 옵저버패턴을이용한다.
+
+    /*
+     옵저버 패턴이란?
+    옵저버 패턴은어떤 객체의 상태가 바뀔 때, 그 변화를 다른 객체에게 자동으로 알려주는 방식
+
+    주체(Subject): 어떤 일을 하고 있는 객체 (예: 게임에서 점수를 기록하는 Player)
+    옵저버(Observer): 주체의 변화를 보고 반응하는 객체 (예: 점수를 화면에 표시하는 ScoreBoard)
+    주체(주인공)가 상태가 바뀌면, 그 변화를 자동으로 옵저버에게 알려주기 때문에 옵저버는 변화를 알게 되고, 그에 맞게 반응을 합니다. 즉, 상태 변화가 있을 때 다른 객체들이 자동으로 알림을 받는 시스템입니다.
+     */
+    public event Action onEncountered;
+
     private bool isMoving;
     private Animator animator;
     private Vector2 input;
@@ -22,7 +38,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    // 게임컨트롤러클래스 에서 관리하고, 유니티 업데이트로 자동호출되지않게 이름변경
+    public void HandleUpdate()
     {
         if (!isMoving)
         {
@@ -88,9 +105,11 @@ public class PlayerController : MonoBehaviour
     {
         if(Physics2D.OverlapCircle(transform.position,0.2f,grassLayer)!=null)
         {
-            if(Random.Range(1,101) <=10)
+            if(UnityEngine.Random.Range(1,101) <=10)
             {
-                Debug.Log("야생의 포켓몬이 등장했다!");
+                //false로설정해야 encounter될때 애니메이션화가되지않음.
+                animator.SetBool("isMoving", false);
+                onEncountered();
             }
         }
     }

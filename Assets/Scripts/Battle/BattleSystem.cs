@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,10 +17,12 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleHud enemyHud;
     [SerializeField] BattleDialogBox dialogBox;
 
+    public event Action<bool> onBattleOver;
+
     BattleState state;
     int currentAction;
     int currentMove;
-    private void Start()
+    public void BattleStart()
     {
         StartCoroutine(SetupBattle());
     }
@@ -80,6 +83,9 @@ public class BattleSystem : MonoBehaviour
         {
             yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} (이)가 기절했다.");
             enemyUnit.PlayFaintAnimation();
+
+            yield return new WaitForSeconds(2f);
+            onBattleOver(true);
         }
         else
         {
@@ -108,6 +114,9 @@ public class BattleSystem : MonoBehaviour
         {
             yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 기절했다.");
             playerUnit.PlayFaintAnimation();
+
+            yield return new WaitForSeconds(2f);
+            onBattleOver(false);
         }
         else
         {
@@ -128,7 +137,8 @@ public class BattleSystem : MonoBehaviour
             yield return dialogBox.TypeDialog("효과가 없는것 같다!");
     }
 
-    private void Update()
+    // 게임컨트롤러에서 관리하기위해 핸들업데이트로 변경
+    public void HandleUpdate()
     {
         if (state == BattleState.PlayerAction)
         {
