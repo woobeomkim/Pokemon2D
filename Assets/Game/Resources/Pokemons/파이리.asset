@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40c224d77c07494bb7d01a4e052ae56, type: 3}
   m_Name: "\uD30C\uC774\uB9AC"
   m_EditorClassIdentifier: 
-  name: "\uC774\uC0C1\uD574\uC528"
+  name: "\uD30C\uC774\uB9AC"
   description: 
-  frontSprite: {fileID: 21300000, guid: 0f37bf3cf5680a64d863b5f155b2a597, type: 3}
-  backSprite: {fileID: 21300000, guid: aacaae602a38f884ab9e02e43de3736d, type: 3}
+  frontSprite: {fileID: 21300000, guid: cd259d9d4f8ba2749a16d1cc64d46bec, type: 3}
+  backSprite: {fileID: 21300000, guid: ed8e1d9976a1fd94d961840d8f6e7764, type: 3}
   type1: 2
   type2: 0
   maxHp: 39
@@ -29,5 +29,5 @@ MonoBehaviour:
     level: 1
   - moveBase: {fileID: 11400000, guid: 05b0f87d6a18f7f40a9a7d1750307a3c, type: 2}
     level: 4
-  - moveBase: {fileID: 11400000, guid: 47a6a1b30a7b83d478258f020852708d, type: 2}
+  - moveBase: {fileID: 11400000, guid: b605357d72e985b4fb4f917766ad632c, type: 2}
     level: 7
