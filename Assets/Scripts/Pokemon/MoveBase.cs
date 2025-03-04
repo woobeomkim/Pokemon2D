@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 // 포켓몬에선 기술을 Move라고 사용한다.
 
-[CreateAssetMenu(fileName = "Move",menuName ="Pokemon/Create new Move")]
+[CreateAssetMenu(fileName = "Move", menuName = "Pokemon/Create new Move")]
 public class MoveBase : ScriptableObject
 {
     [SerializeField] string name;
@@ -45,5 +46,21 @@ public class MoveBase : ScriptableObject
     public int PP
     {
         get { return pp; }
+    }
+
+    public bool IsSpecial
+    {
+        get
+        {
+            if (type == PokemonType.Fire || type == PokemonType.Water || type == PokemonType.Grass
+                || type == PokemonType.Ice || type == PokemonType.Electric || type == PokemonType.Dragon)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

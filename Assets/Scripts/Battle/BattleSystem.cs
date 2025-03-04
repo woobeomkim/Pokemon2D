@@ -68,6 +68,7 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.Busy;
 
         var move = playerUnit.Pokemon.Moves[currentMove];
+        move.PP--;
         yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {move.Base.Name}을 사용했다!");
 
         playerUnit.PlayAttackAnimation();
@@ -100,6 +101,7 @@ public class BattleSystem : MonoBehaviour
         // 적포켓몬 랜덤 공격
 
         var move = enemyUnit.Pokemon.GetRandomMove();
+        move.PP--;
         yield return dialogBox.TypeDialog($"{enemyUnit.Pokemon.Base.Name} (이)가 {move.Base.Name}을 사용했다!");
        
         enemyUnit.PlayAttackAnimation();
