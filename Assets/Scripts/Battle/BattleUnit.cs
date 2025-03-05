@@ -8,8 +8,6 @@ using DG.Tweening;
 // 배틀하는 포켓몬을 관리하는클래스
 public class BattleUnit : MonoBehaviour
 {
-    [SerializeField] PokemonBase _base;
-    [SerializeField] int level;
     [SerializeField] bool isPlayerUnit;
 
     public Pokemon Pokemon { get; set; }
@@ -27,9 +25,9 @@ public class BattleUnit : MonoBehaviour
         orginalColor = image.color;
     }
 
-    public void Setup()
+    public void Setup(Pokemon pokemon)
     {
-        Pokemon = new Pokemon(_base, level);
+        Pokemon = pokemon;
         if (isPlayerUnit)
             image.sprite = Pokemon.Base.BackSprite;
         else

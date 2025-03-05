@@ -16,26 +16,34 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleUnit enemyUnit;
     [SerializeField] BattleHud enemyHud;
     [SerializeField] BattleDialogBox dialogBox;
+    [SerializeField] PartyScreen partyScreen;
 
     public event Action<bool> onBattleOver;
 
     BattleState state;
     int currentAction;
     int currentMove;
-    public void BattleStart()
+
+    PokemonParty playerParty;
+    Pokemon wildPokemon;
+
+    public void BattleStart(PokemonParty playerPary, Pokemon wildPokemon)
     {
+        this.playerParty = playerPary;
+        this.wildPokemon = wildPokemon;
         StartCoroutine(SetupBattle());
     }
 
     public IEnumerator SetupBattle()
     {
         // 배틀정보설정
-        playerUnit.Setup();
+        playerUnit.Setup(playerParty.GetHealthPokemon());
         playerHud.SetData(playerUnit.Pokemon);
 
-        enemyUnit.Setup();
+        enemyUnit.Setup(wildPokemon);
         enemyHud.SetData(enemyUnit.Pokemon);
 
+        partyScreen.Init();
         //기술이름 설정
         dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
         // yield return 코루틴함수를하면 이 코루틴 함수가 끝낼때까지 이함수가 기다림
@@ -48,10 +56,15 @@ public class BattleSystem : MonoBehaviour
     void PlayerAction()
     {
         state = BattleState.PlayerAction;
-        StartCoroutine(dialogBox.TypeDialog("행동을 고르세요!"));
+        dialogBox.SetDialog("행동을 고르세요!");
         dialogBox.EnableActionSelector(true);
     }
 
+    void OpenPartyScreen()
+    {
+        partyScreen.SetPartyData(playerParty.Pokemons);
+        partyScreen.gameObject.SetActive(true);
+    }
     void PlayerMove()
     {
         //UI업데이트
@@ -118,7 +131,25 @@ public class BattleSystem : MonoBehaviour
             playerUnit.PlayFaintAnimation();
 
             yield return new WaitForSeconds(2f);
-            onBattleOver(false);
+
+            var nextPokemon = playerParty.GetHealthPokemon();
+            if (nextPokemon != null)
+            {
+                playerUnit.Setup(nextPokemon);
+                playerHud.SetData(nextPokemon);
+
+                //기술이름 설정
+                dialogBox.SetMoveNames(nextPokemon.Moves);
+                // yield return 코루틴함수를하면 이 코루틴 함수가 끝낼때까지 이함수가 기다림
+                yield return dialogBox.TypeDialog($"가라! {nextPokemon.Base.Name}!");
+
+                //플레이어 행동시작
+                PlayerAction();
+            }
+            else
+            {
+                onBattleOver(false);
+            }            
         }
         else
         {
@@ -155,17 +186,17 @@ public class BattleSystem : MonoBehaviour
     void HandleActionSelection()
     {
         // selector 업데이트
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (currentAction < 1)
-                ++currentAction;
-        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            ++currentAction;
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            --currentAction;
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+            currentAction += 2;
         else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (currentAction > 0)
-                --currentAction;
-        }
+            currentAction -= 2;
 
+        //Clamp를 활용한 0~3보정
+        currentAction = Mathf.Clamp(currentAction, 0, 3);
         // UI업데이트
         dialogBox.UpdateActionSelection(currentAction);
 
@@ -175,10 +206,21 @@ public class BattleSystem : MonoBehaviour
         {
             if (currentAction == 0)
             {
+                // Fight
                 PlayerMove();
             }
             else if (currentAction == 1)
             {
+                // Bag
+            }
+            else if (currentAction == 2)
+            {
+                // Pokemon
+                OpenPartyScreen();
+            }
+            else if (currentAction == 3)
+            {
+                // Run
             }
         }
     }
@@ -187,25 +229,16 @@ public class BattleSystem : MonoBehaviour
     {
         // selector 업데이트
         if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (currentMove < playerUnit.Pokemon.Moves.Count-1)
-                ++currentMove;
-        }
+            ++currentMove;
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (currentMove > 0)
-                --currentMove;
-        }
+            --currentMove;
         else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (currentMove < playerUnit.Pokemon.Moves.Count - 2)
-                currentMove += 2;
-        }
-        else if(Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (currentMove > 1)
-                currentMove -= 2;
-        }
+            currentMove += 2;
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+            currentMove -= 2;
+
+        //Clamp를 활용한 0~3보정
+        currentMove = Mathf.Clamp(currentMove, 0, playerUnit.Pokemon.Moves.Count - 1);
 
         // UI 업데이트
         dialogBox.UpdateMoveSelection(currentMove, playerUnit.Pokemon.Moves[currentMove]);
@@ -217,6 +250,13 @@ public class BattleSystem : MonoBehaviour
             dialogBox.EnableDialogText(true);
             StartCoroutine(PerformPlayerMove());
 
+        }
+        //X를 누르면 다시 Move선택창으로
+        else if(Input.GetKeyDown(KeyCode.X))
+        {
+            dialogBox.EnableMoveSelector(false);
+            dialogBox.EnableDialogText(true);
+            PlayerAction();
         }
     }
 }
