@@ -12,16 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40c224d77c07494bb7d01a4e052ae56, type: 3}
   m_Name: "\uD478\uB9B0"
   m_EditorClassIdentifier: 
-  name: 
+  name: "\uD478\uB9B0"
   description: 
-  frontSprite: {fileID: 0}
-  backSprite: {fileID: 0}
-  type1: 0
+  frontSprite: {fileID: 597442299, guid: dbe14867ac2b08f43befa29f21b778a5, type: 3}
+  backSprite: {fileID: -1147975951, guid: 53e100f0010a31e4fb4be50a919606f0, type: 3}
+  type1: 1
   type2: 0
-  maxHp: 0
-  attack: 0
-  defense: 0
-  spAttack: 0
-  spDefense: 0
-  speed: 0
-  learanableMoves: []
+  maxHp: 115
+  attack: 45
+  defense: 20
+  spAttack: 45
+  spDefense: 20
+  speed: 20
+  learanableMoves:
+  - moveBase: {fileID: 11400000, guid: c5415f786a1578f4cbf43991aacede63, type: 2}
+    level: 1
+  - moveBase: {fileID: 11400000, guid: 05b0f87d6a18f7f40a9a7d1750307a3c, type: 2}
+    level: 1
+  - moveBase: {fileID: 11400000, guid: 2c184cf087a9a5c4596d26f56c4cb105, type: 2}
+    level: 10

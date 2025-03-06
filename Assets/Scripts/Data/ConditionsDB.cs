@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class ConditionsDB
 {
+    public static void Init()
+    {
+        foreach(var kvp in Conditions)
+        {
+            var conditionId = kvp.Key;
+            var condition = kvp.Value;
+
+            condition.Id = conditionId;
+        }
+    }
+
     public static Dictionary<ConditionID, Condition> Conditions { get; set; } = new Dictionary<ConditionID, Condition>()
     {
         { 
@@ -94,10 +105,46 @@ public class ConditionsDB
                 },
             }
           },
+
+          // VolatileStatus
+    {
+            ConditionID.confusion,
+            new Condition()
+            {
+                Name = "Confusion",
+                StartMessage = "혼란에 빠졌다.",
+                OnStart = (Pokemon pokemon) =>
+                {
+                    // 혼란상태 1~4턴동안 .
+                    pokemon.VolatileStatusTime = UnityEngine.Random.Range(1,5);
+                    Debug.Log($"{pokemon.VolatileStatusTime} 동안 움직일수없다.");
+                },
+                OnBeforeMove = (Pokemon pokemon) =>
+                {
+                    if(pokemon.VolatileStatusTime<=0)
+                    {
+                        pokemon.CureVolatileStatus();
+                        pokemon.StatusChanges.Enqueue($"{pokemon.Base.Name}이 정신을 차렸다!");
+                        return true;
+                    }
+
+                    pokemon.VolatileStatusTime--;
+                    if(UnityEngine.Random.Range(1,3) == 1)
+                        return true;
+                    pokemon.StatusChanges.Enqueue($"{pokemon.Base.Name}이 혼란에 빠졌다!");
+                    pokemon.UpdateHP(pokemon.MaxHp / 8);
+                    pokemon.StatusChanges.Enqueue($"혼란으로인해 자신을 공격했다!");
+                    return false;
+                },
+            }
+          },
+
+
     }; 
 }
 
 public enum ConditionID
 {
-    none,psn,brn,slp,par,frz
+    none,psn,brn,slp,par,frz,
+    confusion
 }
