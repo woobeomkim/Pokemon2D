@@ -73,13 +73,16 @@ public class MoveEffects
     // µñ¼Å³Ê¸®´Â Á÷·ÄÈ­ºÒ°¡
     //[SerializeField] Dictionary<Stat, int>   
     [SerializeField] List<StatBoost> boosts;
-
+    [SerializeField] ConditionID status;
     public List<StatBoost> Boosts
     {
         get { return boosts; }
     }
 
-
+    public ConditionID Status
+    {
+        get { return status; }
+    }
 }
 
 [System.Serializable]

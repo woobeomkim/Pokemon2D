@@ -151,17 +151,40 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(2f);
             CheckForBattleOver(targetUnit);
         }
+
+
+        // 화상이나 독 상태에 걸려 턴이후 데미지를 입는지
+        sourceUnit.Pokemon.OnAfterTurn();
+        yield return ShowStatusChanges(sourceUnit.Pokemon);
+        yield return sourceUnit.Hud.UpdateHP();
+
+        if (sourceUnit.Pokemon.HP <= 0)
+        {
+            yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.Name} (이)가 기절했다.");
+            sourceUnit.PlayFaintAnimation();
+
+            yield return new WaitForSeconds(2f);
+            CheckForBattleOver(sourceUnit);
+        }
     }
 
     IEnumerator RunMoveEffects(Move move , Pokemon sourceUnit, Pokemon targetUnit)
     {
         var effects = move.Base.Effects;
+
+        // Stat Boosting
         if (effects.Boosts != null)
         {
             if (move.Base.Target == MoveTarget.Self)
                 sourceUnit.ApplyBoosts(effects.Boosts);
             else
                 targetUnit.ApplyBoosts(effects.Boosts);
+        }
+
+        //Status Condition
+        if(effects.Status != ConditionID.none)
+        {
+            targetUnit.SetStatus(effects.Status);
         }
 
         yield return ShowStatusChanges(sourceUnit);
@@ -346,6 +369,7 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator SwitchPokemon(Pokemon newPokemon)
     {
+        dialogBox.EnableActionSelector(false);
         bool currentPokemonFainted = true;
         if (playerUnit.Pokemon.HP > 0)
         {

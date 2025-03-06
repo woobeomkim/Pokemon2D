@@ -22,7 +22,11 @@ public class Pokemon
     // 포켓몬에서 부스트는 -6 ~ +6까지 부스팅된다.
     public Dictionary<Stat,int> StatBoosts { get; private set; }
 
+    public Condition Status { get; set; }
+
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
+    public bool HpChanged { get; set; }
+
     public void Init()
     {
         // Generate Mvoes
@@ -106,10 +110,31 @@ public class Pokemon
 
             StatBoosts[stat] = Mathf.Clamp(StatBoosts[stat] + boost, -6, 6);
 
+            string kor = "";
+            switch(stat)
+            {
+                case Stat.Attack:
+                    kor = "공격력";
+                    break;
+                case Stat.Defnecse:
+                    kor = "방어력";
+                    break;
+                case Stat.SpAttack:
+                    kor = "특수공격력";
+
+                    break;
+                case Stat.SpDefense:
+                    kor = "특수방어력";
+                    break;
+                case Stat.Speed:
+                    kor = "스피드";
+                    break;
+            }
+
             if (boost > 0)
-                StatusChanges.Enqueue($"{Base.Name}의 {stat} 증가했습니다!");
+                StatusChanges.Enqueue($"{Base.Name}의 {kor}(이)가 증가했습니다!");
             else
-                StatusChanges.Enqueue($"{Base.Name}의 {stat} 감소했습니다!");
+                StatusChanges.Enqueue($"{Base.Name}의 {kor}(이)가 감소했습니다!");
 
 
             Debug.Log($"{stat} has been bossted to {StatBoosts[stat]} ");
@@ -176,21 +201,31 @@ public class Pokemon
         float d = a * move.Base.Power * ((float)attack / defense) + 2;
         int damage = Mathf.FloorToInt(d * modifiers);
 
-        HP -= damage;
-        if (HP <= 0)
-        {
-            // Pokemon Fainted
-            HP = 0;
-            damageDetails.Fainted = true;
-        }
+        UpdateHP(damage);
 
         return damageDetails;
     }
 
+    public void UpdateHP(int damage)
+    {
+        HP = Mathf.Clamp(HP - damage, 0, MaxHp);
+        HpChanged = true;
+    }
+
+    public void SetStatus(ConditionID conditionId)
+    {
+        Status = ConditionsDB.Conditions[conditionId];
+        StatusChanges.Enqueue($"{Base.Name} {Status.StartMessage}");
+    }
     public Move GetRandomMove()
     {
         int r = UnityEngine.Random.Range(0, Moves.Count);
         return Moves[r];
+    }
+
+    public void OnAfterTurn()
+    {
+        Status?.onAfterTurn?.Invoke(this);
     }
 
     public void OnBattleOver()
