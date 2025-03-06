@@ -1878,6 +1878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerUnit: 1
+  hud: {fileID: 1939619863}
 --- !u!1 &325242530
 GameObject:
   m_ObjectHideFlags: 0
@@ -4019,6 +4020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerUnit: 0
+  hud: {fileID: 1483437006}
 --- !u!114 &1059691973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8854,9 +8856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerUnit: {fileID: 274651553}
-  playerHud: {fileID: 1939619863}
   enemyUnit: {fileID: 1059691972}
-  enemyHud: {fileID: 1483437006}
   dialogBox: {fileID: 400700785}
   partyScreen: {fileID: 1798601835}
 --- !u!1 &2093496123

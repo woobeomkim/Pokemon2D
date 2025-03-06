@@ -185,6 +185,16 @@ public enum PokemonType
     Dragon,
 }
 
+//강화할수있는값들을 따로 Stat enum으로 빼줬다.
+public enum Stat
+{
+    Attack,
+    Defnecse,
+    SpAttack,
+    SpDefense,
+    Speed,
+}
+
 class TypeChart
 {
     static float[][] chart =
