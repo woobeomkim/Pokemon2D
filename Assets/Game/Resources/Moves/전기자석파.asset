@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73855bf3a66f4774e93a2a535127415d, type: 3}
-  m_Name: "\uB3C5\uAC00\uB8E8"
+  m_Name: "\uC804\uAE30\uC790\uC11D\uD30C"
   m_EditorClassIdentifier: 
-  name: "\uB3C5\uAC00\uB8E8"
+  name: "\uC804\uAE30\uC790\uC11D\uD30C"
   description: 
-  type: 8
+  type: 4
   power: 0
   accuracy: 100
   pp: 20
   category: 2
   effects:
     boosts: []
-    status: 1
+    status: 4
   target: 0
