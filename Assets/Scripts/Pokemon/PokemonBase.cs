@@ -193,6 +193,10 @@ public enum Stat
     SpAttack,
     SpDefense,
     Speed,
+
+    // (이 두 개는 실제 스탯이 아니라, 기술 명중률을 증가시키는 데 사용됨)
+    Accuracy,
+    Evasion,
 }
 
 class TypeChart

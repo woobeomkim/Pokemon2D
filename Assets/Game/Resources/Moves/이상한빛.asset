@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73855bf3a66f4774e93a2a535127415d, type: 3}
   m_Name: "\uC774\uC0C1\uD55C\uBE5B"
   m_EditorClassIdentifier: 
-  name: "\uB3C5\uAC00\uB8E8"
+  name: "\uC774\uC0C1\uD55C\uBE5B"
   description: 
-  type: 8
+  type: 1
   power: 0
   accuracy: 100
+  alwaysHits: 0
   pp: 20
   category: 2
   effects:
     boosts: []
-    status: 1
+    status: 0
+    volatileStatus: 6
+  secondaries: []
   target: 0

@@ -135,31 +135,50 @@ public class BattleSystem : MonoBehaviour
         move.PP--;
         yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.Name} (이)가 {move.Base.Name}을 사용했다!");
 
-        sourceUnit.PlayAttackAnimation();
-        yield return new WaitForSeconds(1.0f);
-
-        targetUnit.PlayHitAnimation();
-
-        if (move.Base.Category == MoveCategory.Status)
+        if(CheckIfMoveHits(move,sourceUnit.Pokemon,targetUnit.Pokemon))
         {
-            yield return RunMoveEffects(move, sourceUnit.Pokemon,targetUnit.Pokemon);
+            sourceUnit.PlayAttackAnimation();
+            yield return new WaitForSeconds(1.0f);
+
+            targetUnit.PlayHitAnimation();
+
+            if (move.Base.Category == MoveCategory.Status)
+            {
+                yield return RunMoveEffects(move.Base.Effects, sourceUnit.Pokemon, targetUnit.Pokemon,move.Base.Target);
+
+            }
+            else
+            { // 데미지를 입는다 
+                var damageDetails = targetUnit.Pokemon.TakeDamage(move, sourceUnit.Pokemon);
+                yield return targetUnit.Hud.UpdateHP();
+                yield return ShowDamageDetails(damageDetails);
+            }
+
+            if(move.Base.Secondaries != null && move.Base.Secondaries.Count >0 && targetUnit.Pokemon.HP > 0)
+            {
+                foreach (var secondary in move.Base.Secondaries)
+                {
+                    var rnd = UnityEngine.Random.Range(1, 101);
+                    if (rnd <= secondary.Chance)
+                        yield return RunMoveEffects(secondary, sourceUnit.Pokemon, targetUnit.Pokemon,secondary.Target);
+                }
+            }
+
+            if (targetUnit.Pokemon.HP <= 0)
+            {
+                yield return dialogBox.TypeDialog($"{targetUnit.Pokemon.Base.Name} (이)가 기절했다.");
+                targetUnit.PlayFaintAnimation();
+
+                yield return new WaitForSeconds(2f);
+                CheckForBattleOver(targetUnit);
+            }
 
         }
         else
-        { // 데미지를 입는다 
-            var damageDetails = targetUnit.Pokemon.TakeDamage(move, sourceUnit.Pokemon);
-            yield return targetUnit.Hud.UpdateHP();
-            yield return ShowDamageDetails(damageDetails);
-        }
-
-        if (targetUnit.Pokemon.HP <=0)
         {
-            yield return dialogBox.TypeDialog($"{targetUnit.Pokemon.Base.Name} (이)가 기절했다.");
-            targetUnit.PlayFaintAnimation();
-
-            yield return new WaitForSeconds(2f);
-            CheckForBattleOver(targetUnit);
+            yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.name} 의 공격이 빗나갔습니다!");
         }
+        
 
 
         // 화상이나 독 상태에 걸려 턴이후 데미지를 입는지
@@ -177,14 +196,13 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    IEnumerator RunMoveEffects(Move move , Pokemon sourceUnit, Pokemon targetUnit)
+    IEnumerator RunMoveEffects(MoveEffects effects , Pokemon sourceUnit, Pokemon targetUnit, MoveTarget moveTarget)
     {
-        var effects = move.Base.Effects;
 
         // Stat Boosting
         if (effects.Boosts != null)
         {
-            if (move.Base.Target == MoveTarget.Self)
+            if (moveTarget == MoveTarget.Self)
                 sourceUnit.ApplyBoosts(effects.Boosts);
             else
                 targetUnit.ApplyBoosts(effects.Boosts);
@@ -204,6 +222,34 @@ public class BattleSystem : MonoBehaviour
 
         yield return ShowStatusChanges(sourceUnit);
         yield return ShowStatusChanges(targetUnit);
+    }
+
+    bool CheckIfMoveHits(Move move , Pokemon source, Pokemon target)
+    {
+        if (move.Base.AlwayHits)
+            return true;
+
+        float moveAccuracy = move.Base.Accuracy;
+
+        int accuracy = source.StatBoosts[Stat.Accuracy];
+        int evasion = target.StatBoosts[Stat.Accuracy];
+
+        // 실제사용되는 부스트값
+        var boostValues = new float[] { 1f, 4f / 3f,5f / 3f,2f,7f / 3f, 8f / 3f, 3f };
+
+        if (accuracy > 0)
+            moveAccuracy *= boostValues[accuracy];
+        else
+            moveAccuracy /= boostValues[-accuracy];
+
+        if (evasion > 0)
+            moveAccuracy /= boostValues[evasion];
+        else
+            moveAccuracy *= boostValues[-evasion];
+
+
+
+        return UnityEngine.Random.Range(1, 101) <= moveAccuracy;
     }
 
     IEnumerator ShowStatusChanges(Pokemon pokemon)

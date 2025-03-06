@@ -2956,15 +2956,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pokemons:
   - _base: {fileID: 11400000, guid: d87672542fe45c8428db26bcad147c40, type: 2}
-    _level: 10
+    _level: 16
+  - _base: {fileID: 11400000, guid: 16af68107431c5f448d37ab33b84c817, type: 2}
+    _level: 7
   - _base: {fileID: 11400000, guid: 92224ff6df1e01c4e9f248f81c27f81e, type: 2}
     _level: 10
   - _base: {fileID: 11400000, guid: d61ff1596f259e94ea9ed84a1abba408, type: 2}
     _level: 10
   - _base: {fileID: 11400000, guid: 174c1bff26e1f2b459f8ae6ccbc0af36, type: 2}
     _level: 7
-  - _base: {fileID: 11400000, guid: 16af68107431c5f448d37ab33b84c817, type: 2}
-    _level: 5
 --- !u!1 &624582751
 GameObject:
   m_ObjectHideFlags: 0
@@ -3132,6 +3132,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1644386391954756061, guid: 181fe5b86f3bc34498f790c350ada93e, type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1472482777}
     - target: {fileID: 8733713746161811066, guid: 181fe5b86f3bc34498f790c350ada93e, type: 3}
       propertyPath: m_Name
       value: EnemyHud
@@ -3155,6 +3159,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c20df164e611154cadd26a567a5a532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &677962803 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4199608039382849783, guid: 181fe5b86f3bc34498f790c350ada93e, type: 3}
+  m_PrefabInstance: {fileID: 2379332592933700009}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &701678660
@@ -3913,6 +3928,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1472482777 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4199608039382849783, guid: 181fe5b86f3bc34498f790c350ada93e, type: 3}
+  m_PrefabInstance: {fileID: 655884340}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1563965136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7830,7 +7856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1994628597
 Transform:
   m_ObjectHideFlags: 0
@@ -8031,6 +8057,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1644386391954756061, guid: 181fe5b86f3bc34498f790c350ada93e, type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 677962803}
     - target: {fileID: 8733713746161811066, guid: 181fe5b86f3bc34498f790c350ada93e, type: 3}
       propertyPath: m_Name
       value: PlayerHud
