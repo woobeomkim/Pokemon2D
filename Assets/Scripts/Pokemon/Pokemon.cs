@@ -21,6 +21,8 @@ public class Pokemon
     // 얼마나 부스트되었는지 저장하는 딕셔너리
     // 포켓몬에서 부스트는 -6 ~ +6까지 부스팅된다.
     public Dictionary<Stat,int> StatBoosts { get; private set; }
+
+    public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
     public void Init()
     {
         // Generate Mvoes
@@ -37,14 +39,7 @@ public class Pokemon
         
         HP = MaxHp;
 
-        StatBoosts = new Dictionary<Stat,int>()
-        {
-            { Stat.Attack, 0},
-            { Stat.Defnecse, 0},
-            { Stat.SpAttack, 0},
-            { Stat.SpDefense, 0},
-            { Stat.Speed, 0},
-        };
+        ResetStatBoost();
     }
 
     // Stat을 미리 계산하는함수.
@@ -67,6 +62,18 @@ public class Pokemon
             {Stat.SpDefense,6 },
             {Stat.Speed,6 },
         
+        };
+    }
+
+    void ResetStatBoost()
+    {
+        StatBoosts = new Dictionary<Stat, int>()
+        {
+            { Stat.Attack, 0},
+            { Stat.Defnecse, 0},
+            { Stat.SpAttack, 0},
+            { Stat.SpDefense, 0},
+            { Stat.Speed, 0},
         };
     }
 
@@ -98,6 +105,12 @@ public class Pokemon
             var boost = statBoost.boost;
 
             StatBoosts[stat] = Mathf.Clamp(StatBoosts[stat] + boost, -6, 6);
+
+            if (boost > 0)
+                StatusChanges.Enqueue($"{Base.Name}의 {stat} 증가했습니다!");
+            else
+                StatusChanges.Enqueue($"{Base.Name}의 {stat} 감소했습니다!");
+
 
             Debug.Log($"{stat} has been bossted to {StatBoosts[stat]} ");
         }
@@ -178,6 +191,11 @@ public class Pokemon
     {
         int r = UnityEngine.Random.Range(0, Moves.Count);
         return Moves[r];
+    }
+
+    public void OnBattleOver()
+    {
+        ResetStatBoost();
     }
 }
 
