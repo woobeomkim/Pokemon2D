@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // 클래스를 직렬화할때
@@ -15,6 +16,8 @@ public class Pokemon
     public int HP { get; set; }
 
     public List<Move> Moves { get; set; }
+
+    public Move CurrentMove { get; set; }
     // 미리 저장해놓을 딕셔너리
     public Dictionary<Stat,int> Stats { get; private set; }
 
@@ -249,8 +252,10 @@ public class Pokemon
 
     public Move GetRandomMove()
     {
-        int r = UnityEngine.Random.Range(0, Moves.Count);
-        return Moves[r];
+        var movesWithPP = Moves.Where(x => x.PP > 0).ToList();
+
+        int r = UnityEngine.Random.Range(0, movesWithPP.Count);
+        return movesWithPP[r];
     }
 
     public bool OnBeforeMove()
