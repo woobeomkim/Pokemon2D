@@ -8,15 +8,19 @@ using UnityEngine;
 [System.Serializable]
 public class Pokemon
 {
+    // 베이스클래스
     [SerializeField] PokemonBase _base;
+    //현재나의레벨
     [SerializeField] int _level;
     public PokemonBase Base { get { return _base; } }
     public int Level { get{ return _level; } }
 
     public int HP { get; set; }
 
+    // 내가가지고잇는 Moves
     public List<Move> Moves { get; set; }
 
+    // 현재무브
     public Move CurrentMove { get; set; }
     // 미리 저장해놓을 딕셔너리
     public Dictionary<Stat,int> Stats { get; private set; }
@@ -225,8 +229,24 @@ public class Pokemon
 
     public void SetStatus(ConditionID conditionId)
     {
+        /*
+         C#의 값 타입(int, float, bool, struct, enum 등)은 원래 null을 가질 수 없습니다.
+        하지만 ?를 붙이면 null을 가질 수 있는 nullable 타입으로 변환됩니다.
+
+        선언할때 ? null을 선언할수있게만들어준다
+        int? a = null 가능해짐
+        호출할때 ? 해당값이 null이면 실행하지않고 넘어감
+        Status?.Invoke(this)
+        Status가 null이면 실행하지않고 아무일도 안일어남
+
+         */
+
         if (Status != null) return;
         Status = ConditionsDB.Conditions[conditionId];
+        /*
+         OnStart?.Invoke(this);는 이벤트가 null인지 확인한 후 현재 객체(this)를 인자로 전달하여 이벤트를 실행하는 코드
+         ?. 연산자를 사용하면 이벤트에 구독자가 없을 때(null일 때) 예외가 발생하지 않고 그냥 넘어갈 수 있음.
+         */
         Status?.OnStart?.Invoke(this);
         StatusChanges.Enqueue($"{Base.Name} {Status.StartMessage}");
         OnStatusChanged?.Invoke();
@@ -242,6 +262,8 @@ public class Pokemon
     public void CureStatus()
     {
         Status = null;
+        // Invoke()나 ()는 같은기능을하지만 널체크를하고싶을때
+        // OnStatusChanged?.Invoke()를사용하자 널체크 필요없을때 간단히 OnStatusChanged()가능
         OnStatusChanged?.Invoke();
     }
     
@@ -252,7 +274,31 @@ public class Pokemon
 
     public Move GetRandomMove()
     {
+        /*Where 함수는 **LINQ(Language-Integrated Query)**에서 제공하는 메서드 중 하나로, 특정 조건을 만족하는 요소만 필터링(filtering)하는 역할을 합니다.
+        즉, 컬렉션(배열, 리스트 등)에서 원하는 조건의 값만 추출하는 데 사용됩니다.
+         Where가 반환하는 데이터는 IEnumerable<T>이므로, .ToList()를 사용하여 List<T>로 변환할 수 있습니다.
+        Where는 조건을 만족하는 요소만 필터링하는 함수.
+        람다식(n => 조건)을 사용하여 조건을 정의.
+        객체 리스트에서도 사용 가능 (students.Where(s => s.Score > 80)).
+        ToList()를 사용하면 필터링된 데이터를 List<T>로 변환 가능.
+
+        (x => x.pp >0)
+        (변수 => 조건)
+
+        LINQ(Where Select OrderBy등등)은 컬렉션(리스트,딕셔너리 등등)을 SQL쿼리처럼 쓸수잇게만들드는기능
+         */
         var movesWithPP = Moves.Where(x => x.PP > 0).ToList();
+
+        /*                   UnityEngine.Random vs System.Random
+         	                UnityEngine.Random	                        System.Random
+         네임스페이스 	    UnityEngine	                                System
+         용도	            유니티 전용 난수 생성기	                    일반적인 C# 난수 생성기
+         난수 생성 방식	    게임 오브젝트 및 물리 연산에 최적화됨	        일반적인 의사 난수 생성기(PRNG)
+         Seed 설정 가능 여부	Random.InitState(int seed) 사용	            new Random(int seed) 생성자로 설정
+         float 난수 범위    	Random.Range(0f, 1f) → [0, 1] 범위 포함	    (float)new Random().NextDouble() → (0, 1) 범위 (1 포함 안 함)
+         int 난수 범위	    Random.Range(min, max) → max 포함됨	        new Random().Next(min, max) → max 미포함
+         멀티스레드 안전성	static이라 멀티스레드에서 문제 발생 가능	    Random 인스턴스를 따로 만들면 멀티스레드 안전
+         */
 
         int r = UnityEngine.Random.Range(0, movesWithPP.Count);
         return movesWithPP[r];
@@ -276,12 +322,14 @@ public class Pokemon
         return canPerfromMove;
     }
 
+    //턴이 끝나고 실행할함수
     public void OnAfterTurn()
     {
         Status?.onAfterTurn?.Invoke(this);
         VolatileStatus?.onAfterTurn?.Invoke(this);
     }
 
+    //배틀이 끝나고 실행할함수
     public void OnBattleOver()
     {
         VolatileStatus = null;
@@ -289,6 +337,7 @@ public class Pokemon
     }
 }
 
+// 데미지 세부사항클래스
 public class DamageDetails
 {
     public bool Fainted { get; set; }

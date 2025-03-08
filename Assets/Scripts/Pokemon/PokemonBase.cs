@@ -201,6 +201,7 @@ public enum Stat
 
 class TypeChart
 {
+    // 타입에대한 속성 2차원배열로 미리만들어두기
     static float[][] chart =
     {
         //                       Nor   Fir   Wat   Ele   Gra   Ice   Fig   Poi   Gro   Fly   Psy   Bug   Roc   Gho   Dra   Dar  Ste    Fai
@@ -224,6 +225,7 @@ class TypeChart
         /*Fairy*/   new float[] {1f,   0.5f, 1f,   1f,   1f,   1f,   2f,   0.5f, 1f,   1f,   1f,   1f,   1f,   1f,   2f,   2f,   0.5f, 1f},
     };
 
+    // 배열값 얻어온는함수
     public static float GetEffectiveness(PokemonType attackerType, PokemonType defenderType)
     {
         if (attackerType == PokemonType.None || defenderType == PokemonType.None)

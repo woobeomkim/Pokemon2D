@@ -84,6 +84,7 @@ public class MoveBase : ScriptableObject
     }
 }
 
+// 1차효과 ( 울음소리, 버프기)
 [System.Serializable]
 public class MoveEffects
 {

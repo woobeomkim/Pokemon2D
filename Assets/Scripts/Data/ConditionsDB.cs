@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 상태이상을 미리저장해놓는 딕셔너리
 public class ConditionsDB
 {
     public static void Init()
@@ -143,6 +144,8 @@ public class ConditionsDB
     }; 
 }
 
+
+// 상태이상 ID
 public enum ConditionID
 {
     none,psn,brn,slp,par,frz,

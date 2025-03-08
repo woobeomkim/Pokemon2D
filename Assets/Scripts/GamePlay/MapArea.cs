@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 야생필드의 포켓몬
 public class MapArea : MonoBehaviour
 {
     [SerializeField] List<Pokemon> wildPokemons;

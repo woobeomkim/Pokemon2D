@@ -2955,13 +2955,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pokemons:
+  - _base: {fileID: 11400000, guid: d61ff1596f259e94ea9ed84a1abba408, type: 2}
+    _level: 3
   - _base: {fileID: 11400000, guid: d87672542fe45c8428db26bcad147c40, type: 2}
-    _level: 16
+    _level: 5
   - _base: {fileID: 11400000, guid: 16af68107431c5f448d37ab33b84c817, type: 2}
     _level: 7
   - _base: {fileID: 11400000, guid: 92224ff6df1e01c4e9f248f81c27f81e, type: 2}
-    _level: 10
-  - _base: {fileID: 11400000, guid: d61ff1596f259e94ea9ed84a1abba408, type: 2}
     _level: 10
   - _base: {fileID: 11400000, guid: 174c1bff26e1f2b459f8ae6ccbc0af36, type: 2}
     _level: 7
