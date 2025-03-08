@@ -10,10 +10,6 @@ using UnityEngine;
  */
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed;
-    public LayerMask solidObjectsLayer;
-    public LayerMask interactableLayer;
-    public LayerMask grassLayer;
 
     // 게임컨트롤러에서 state패턴을이용해 상태를바꾸려면 
     // 플레이어컨트롤러에서 게임컨트롤러를 참조해야는데 이미 게임컨트롤러에서 플레이어컨트롤러를 참조해 상태에따라 업데이트를하므로
@@ -30,19 +26,18 @@ public class PlayerController : MonoBehaviour
      */
     public event Action onEncountered;
 
-    private bool isMoving;
-    private CharacterAnimator animator;
+    private Character character;
     private Vector2 input;
 
     private void Awake()
     {
-        animator = GetComponent<CharacterAnimator>();
+        character = GetComponent<Character>();
     }
 
     // 게임컨트롤러클래스 에서 관리하고, 유니티 업데이트로 자동호출되지않게 이름변경
     public void HandleUpdate()
     {
-        if (!isMoving)
+        if (!character.IsMoving)
         {
             // GetAxis 는 0~ +-1까지 점진적으로증가 
             // GetAXisRaw는 0~ +=1로 바로증가
@@ -53,79 +48,37 @@ public class PlayerController : MonoBehaviour
 
             if (input != Vector2.zero)
             {
-                animator.MoveX = input.x;
-                animator.MoveY = input.y;
-                
-                var targetPos = transform.position;
-
-                targetPos.x += input.x;
-                targetPos.y += input.y;
-
-                if(IsWalkable(targetPos)) 
-                    StartCoroutine(Move(targetPos));
+                StartCoroutine(character.Move(input,CheckForEncounters));
             }
         }
+        character.HandleUpdate();
 
-       animator.IsMoving = isMoving;
         if (Input.GetKeyDown(KeyCode.Z))
             Interact();
     }
 
     public void Interact()
     {
-        var facingDir = new Vector3(animator.MoveX, animator.MoveY);
+        var facingDir = new Vector3(character.Animator.MoveX, character.Animator.MoveY);
         var interactPos = transform.position + facingDir;
 
         //Debug.DrawLine(transform.position, interactPos, Color.red, 0.5f);
 
-        var collider = Physics2D.OverlapCircle(interactPos, 0.3f, interactableLayer);
+        var collider = Physics2D.OverlapCircle(interactPos, 0.3f, GameLayers.i.InteractableLayer);
         if (collider != null)
         {
             collider.GetComponent<Interactable>()?.Interact();
         }
     }
 
-    // IEnumerator 함수가 멈춘후 다시실행하기위한 상태정보를 저장하기위한 인터페이스
-    IEnumerator Move(Vector3 targetPos)
-    {
-        isMoving = true;
-
-        while((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
-        { 
-            // 일정한속도로 움직일때 사용
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
-
-            // yield 코루틴을 사용하기위한 연산자
-            // 한프레임쉬고 다음프레임에 실행이됨
-            yield return null;
-        }
-
-        transform.position = targetPos;
-        isMoving = false;
-
-        CheckForEncounters();
-    }
-
-    bool IsWalkable(Vector3 targetPos)
-    {
-        // OverlapCirlce = targetPos위치에 raidus만큼의 원을만들어 충돌을 검사한다 세번째 레이어를 설정할수있다. 실패시 null반환
-        // 보통은 플레이어를 타일맵의 정중앙 0.5,0.5단위로 두는게 일반적이지만
-        // 조금더 나은느낌을 주기위해 정중앙보다 약간위 0.5,0.8단위로 두면 더 좋은 게임경험을 만들수있다.
-        // 이렇게하면 오버랩서클의 반지름을 더작게 0.2로 줄였다.. (기존 0.5 0.5 위치의 반지름 0.3)
-        if (Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer | interactableLayer) != null)
-            return false;
-
-        return true;
-    }
-
     private void CheckForEncounters()
     {
-        if(Physics2D.OverlapCircle(transform.position,0.2f,grassLayer)!=null)
+        if (Physics2D.OverlapCircle(transform.position, 0.2f, GameLayers.i.GrassLayer) != null)
         {
-            if(UnityEngine.Random.Range(1,101) <=10)
+            if (UnityEngine.Random.Range(1, 101) <= 10)
             {
                 //false로설정해야 encounter될때 애니메이션화가되지않음.
-                animator.IsMoving = false;
+                character.Animator.IsMoving = false;
                 onEncountered();
             }
         }
