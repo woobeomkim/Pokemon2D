@@ -31,12 +31,12 @@ public class PlayerController : MonoBehaviour
     public event Action onEncountered;
 
     private bool isMoving;
-    private Animator animator;
+    private CharacterAnimator animator;
     private Vector2 input;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponent<CharacterAnimator>();
     }
 
     // 게임컨트롤러클래스 에서 관리하고, 유니티 업데이트로 자동호출되지않게 이름변경
@@ -53,8 +53,8 @@ public class PlayerController : MonoBehaviour
 
             if (input != Vector2.zero)
             {
-                animator.SetFloat("moveX", input.x);
-                animator.SetFloat("moveY", input.y);
+                animator.MoveX = input.x;
+                animator.MoveY = input.y;
                 
                 var targetPos = transform.position;
 
@@ -66,14 +66,14 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        animator.SetBool("isMoving",isMoving);
+       animator.IsMoving = isMoving;
         if (Input.GetKeyDown(KeyCode.Z))
             Interact();
     }
 
     public void Interact()
     {
-        var facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
+        var facingDir = new Vector3(animator.MoveX, animator.MoveY);
         var interactPos = transform.position + facingDir;
 
         //Debug.DrawLine(transform.position, interactPos, Color.red, 0.5f);
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
             if(UnityEngine.Random.Range(1,101) <=10)
             {
                 //false로설정해야 encounter될때 애니메이션화가되지않음.
-                animator.SetBool("isMoving", false);
+                animator.IsMoving = false;
                 onEncountered();
             }
         }
