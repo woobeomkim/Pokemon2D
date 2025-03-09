@@ -10,7 +10,8 @@ using UnityEngine;
  */
 public class PlayerController : MonoBehaviour
 {
-
+    [SerializeField] string name;
+    [SerializeField] Sprite sprite;
     // 게임컨트롤러에서 state패턴을이용해 상태를바꾸려면 
     // 플레이어컨트롤러에서 게임컨트롤러를 참조해야는데 이미 게임컨트롤러에서 플레이어컨트롤러를 참조해 상태에따라 업데이트를하므로
     // 플레이어에에서 게임컨트롤러를 참조하면 순환참조가 일어난다 이를 해결하기위해
@@ -30,6 +31,16 @@ public class PlayerController : MonoBehaviour
 
     private Character character;
     private Vector2 input;
+
+    public string Name
+    {
+        get => name;
+    }
+
+    public Sprite Sprite
+    {
+        get => sprite;
+    }
 
     private void Awake()
     {

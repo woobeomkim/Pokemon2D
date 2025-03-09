@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 // 배틀 진행상태를 enum 으로 정의
@@ -15,6 +17,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleUnit enemyUnit; // 적유닛
     [SerializeField] BattleDialogBox dialogBox; // 배틀다이어로그박스
     [SerializeField] PartyScreen partyScreen; // 파티화면
+    [SerializeField] Image playerImage;
+    [SerializeField] Image trainerImage;
 
     public event Action<bool> onBattleOver; //배틀종료이벤트
 
@@ -25,30 +29,83 @@ public class BattleSystem : MonoBehaviour
     int currentMember; // 현재 선택된 파티 멤버
 
     PokemonParty playerParty; // 플레이어파티
+    PokemonParty trainerParty; // 플레이어파티
     Pokemon wildPokemon; // 야생포켓몬
 
+    bool isTrainerBattle = false;
+    PlayerController player;
+    TrainerController trainer;
+
     // 배틀시작메서드
-    public void BattleStart(PokemonParty playerPary, Pokemon wildPokemon)
+    public void StartBattle(PokemonParty playerPary, Pokemon wildPokemon)
     {
+        isTrainerBattle = false;
         this.playerParty = playerPary;
         this.wildPokemon = wildPokemon;
+        StartCoroutine(SetupBattle());
+    }
+
+    public void StartTrainerBattle(PokemonParty playerPary, PokemonParty trainerParty)
+    {
+        this.playerParty = playerPary;
+        this.trainerParty = trainerParty;
+
+        isTrainerBattle = true;
+        player = playerParty.GetComponent<PlayerController>();
+        trainer = trainerParty.GetComponent<TrainerController>();
+
+
         StartCoroutine(SetupBattle());
     }
 
     // 배틀설정 코루틴
     public IEnumerator SetupBattle()
     {
-        // 배틀정보설정
-        playerUnit.Setup(playerParty.GetHealthPokemon());
+        playerUnit.Clear();
+        enemyUnit.Clear();
 
-        enemyUnit.Setup(wildPokemon); // 적포켓몬배치
-  
+        if (!isTrainerBattle)
+        {
+            // Wild Pokemon Battle
+            // 배틀정보설정
+            playerUnit.Setup(playerParty.GetHealthPokemon());
+
+            enemyUnit.Setup(wildPokemon); // 적포켓몬배치
+            dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);     //기술이름 설정
+            // yield return 코루틴함수를하면 이 코루틴 함수가 끝낼때까지 이함수가 기다림
+            yield return dialogBox.TypeDialog($"야생의 {enemyUnit.Pokemon.Base.Name} (이)가 나타났다!");
+
+        }
+        else
+        {
+            // Trainer Battle
+
+            // Player,Trainer Image show
+            playerUnit.gameObject.SetActive(false);
+            enemyUnit.gameObject.SetActive(false);
+
+            playerImage.gameObject.SetActive(true);
+            trainerImage.gameObject.SetActive(true);
+            playerImage.sprite = player.Sprite;
+            trainerImage.sprite = trainer.Sprite;
+            yield return dialogBox.TypeDialog($"{trainer.Name}(이)가 배틀을 걸어왔다!");
+
+            // 트레이너 포켓몬 꺼내기
+            trainerImage.gameObject.SetActive(false);
+            enemyUnit.gameObject.SetActive(true);
+            var enemyPokemon = trainerParty.GetHealthPokemon();
+            enemyUnit.Setup(enemyPokemon);
+            yield return dialogBox.TypeDialog($"{trainer.Name}(이)가 {enemyPokemon.Base.name}을 꺼냈다!");
+
+            // 플레이어포켓몬
+            playerImage.gameObject.SetActive(false);
+            playerUnit.gameObject.SetActive(true);
+            var playerPokemon = playerParty.GetHealthPokemon();
+            playerUnit.Setup(playerPokemon);
+            yield return dialogBox.TypeDialog($"가라 {playerPokemon.Base.name}!");
+            dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
+        }
         partyScreen.Init(); // 파티화면초기화
-        //기술이름 설정
-        dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
-        // yield return 코루틴함수를하면 이 코루틴 함수가 끝낼때까지 이함수가 기다림
-        yield return dialogBox.TypeDialog($"야생의 {enemyUnit.Pokemon.Base.Name} (이)가 나타났다!");
-
         //플레이어 행동시작
 
         ActionSelection();
@@ -90,7 +147,7 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.RunningTurn;
 
-        if(playerAction == BattleAction.Move)
+        if (playerAction == BattleAction.Move)
         {
             // 플레이어와 적의 기술 설정
             playerUnit.Pokemon.CurrentMove = playerUnit.Pokemon.Moves[currentMove];
@@ -106,9 +163,9 @@ public class BattleSystem : MonoBehaviour
                 playerGoesFirst = false;
             else if (enemyMovePriority == playerMovePriority)
                 playerGoesFirst = (playerUnit.Pokemon.Speed >= enemyUnit.Pokemon.Speed);
-            
-            var firstUnit = (playerGoesFirst)? playerUnit : enemyUnit;
-            var secondUnit = (playerGoesFirst)? enemyUnit : playerUnit;
+
+            var firstUnit = (playerGoesFirst) ? playerUnit : enemyUnit;
+            var secondUnit = (playerGoesFirst) ? enemyUnit : playerUnit;
 
             var secondPokemon = secondUnit.Pokemon;
 
@@ -128,7 +185,7 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            if(playerAction == BattleAction.SwitchPokemon)
+            if (playerAction == BattleAction.SwitchPokemon)
             {
                 var selectedPokemon = playerParty.Pokemons[currentMember];
                 state = BattleState.Busy;
@@ -149,7 +206,7 @@ public class BattleSystem : MonoBehaviour
 
     }
 
- 
+
 
     IEnumerator EnemyMove()
     {
@@ -163,7 +220,7 @@ public class BattleSystem : MonoBehaviour
         // 전투스탯이 RunMove에의해 변경되지않았으면 다음스텝으로 간다
         if (state == BattleState.RunningTurn)
             ActionSelection();
-        
+
     }
 
     // 기술실행처리
@@ -184,7 +241,7 @@ public class BattleSystem : MonoBehaviour
         yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.Name} (이)가 {move.Base.Name}을 사용했다!");
 
         // 명중 여부 체크
-        if (CheckIfMoveHits(move,sourceUnit.Pokemon,targetUnit.Pokemon))
+        if (CheckIfMoveHits(move, sourceUnit.Pokemon, targetUnit.Pokemon))
         {
             // 공격 애니메이션 실행
 
@@ -196,7 +253,7 @@ public class BattleSystem : MonoBehaviour
             if (move.Base.Category == MoveCategory.Status)
             {
                 // 상태 변화 기술 (공격이 아닌 기술) 처리
-                yield return RunMoveEffects(move.Base.Effects, sourceUnit.Pokemon, targetUnit.Pokemon,move.Base.Target);
+                yield return RunMoveEffects(move.Base.Effects, sourceUnit.Pokemon, targetUnit.Pokemon, move.Base.Target);
 
             }
             else
@@ -207,13 +264,13 @@ public class BattleSystem : MonoBehaviour
                 yield return ShowDamageDetails(damageDetails);
             }
             // 부가 효과 처리 (추가 상태 이상 등)
-            if (move.Base.Secondaries != null && move.Base.Secondaries.Count >0 && targetUnit.Pokemon.HP > 0)
+            if (move.Base.Secondaries != null && move.Base.Secondaries.Count > 0 && targetUnit.Pokemon.HP > 0)
             {
                 foreach (var secondary in move.Base.Secondaries)
                 {
                     var rnd = UnityEngine.Random.Range(1, 101);
                     if (rnd <= secondary.Chance)
-                        yield return RunMoveEffects(secondary, sourceUnit.Pokemon, targetUnit.Pokemon,secondary.Target);
+                        yield return RunMoveEffects(secondary, sourceUnit.Pokemon, targetUnit.Pokemon, secondary.Target);
                 }
             }
             // 목표 포켓몬이 기절했다면 메시지 출력 및 처리
@@ -232,11 +289,11 @@ public class BattleSystem : MonoBehaviour
         { // 공격이 빗나갔을 경우 메시지 출력
             yield return dialogBox.TypeDialog($"{sourceUnit.Pokemon.Base.name} 의 공격이 빗나갔습니다!");
         }
-        
+
     }
 
     // 기술 효과 적용 처리
-    IEnumerator RunMoveEffects(MoveEffects effects , Pokemon sourceUnit, Pokemon targetUnit, MoveTarget moveTarget)
+    IEnumerator RunMoveEffects(MoveEffects effects, Pokemon sourceUnit, Pokemon targetUnit, MoveTarget moveTarget)
     {
         // Stat Boosting
         if (effects.Boosts != null)
@@ -248,7 +305,7 @@ public class BattleSystem : MonoBehaviour
         }
 
         //Status Condition
-        if(effects.Status != ConditionID.none)
+        if (effects.Status != ConditionID.none)
         {
             targetUnit.SetStatus(effects.Status);
         }
@@ -283,7 +340,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    bool CheckIfMoveHits(Move move , Pokemon source, Pokemon target)
+    bool CheckIfMoveHits(Move move, Pokemon source, Pokemon target)
     {
         if (move.Base.AlwayHits)
             return true;
@@ -294,7 +351,7 @@ public class BattleSystem : MonoBehaviour
         int evasion = target.StatBoosts[Stat.Accuracy];
 
         // 실제사용되는 부스트값
-        var boostValues = new float[] { 1f, 4f / 3f,5f / 3f,2f,7f / 3f, 8f / 3f, 3f };
+        var boostValues = new float[] { 1f, 4f / 3f, 5f / 3f, 2f, 7f / 3f, 8f / 3f, 3f };
 
         if (accuracy > 0)
             moveAccuracy *= boostValues[accuracy];
@@ -313,7 +370,7 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator ShowStatusChanges(Pokemon pokemon)
     {
-        while(pokemon.StatusChanges.Count > 0)
+        while (pokemon.StatusChanges.Count > 0)
         {
             var message = pokemon.StatusChanges.Dequeue();
             yield return dialogBox.TypeDialog(message);
@@ -322,7 +379,7 @@ public class BattleSystem : MonoBehaviour
 
     void CheckForBattleOver(BattleUnit faintedUnit)
     {
-        if(faintedUnit.IsPlayerUnit)
+        if (faintedUnit.IsPlayerUnit)
         {
             var nextPokemon = playerParty.GetHealthPokemon();
             if (nextPokemon != null)
@@ -336,7 +393,17 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            BattleOver(true);
+            if (!isTrainerBattle)
+                BattleOver(true);
+            else
+            {
+                var nextPokemon = trainerParty.GetHealthPokemon();
+                if (nextPokemon != null)
+                    // Send Out Pokemon
+                    StartCoroutine(SendNextTrainerPokemon(nextPokemon));
+                else
+                    BattleOver(true);
+            }
         }
     }
 
@@ -359,11 +426,11 @@ public class BattleSystem : MonoBehaviour
         {
             HandleActionSelection();
         }
-        else if(state == BattleState.MoveSelection)
+        else if (state == BattleState.MoveSelection)
         {
             HandleMoveSelection();
         }
-        else if(state == BattleState.PartyScreen)
+        else if (state == BattleState.PartyScreen)
         {
             HandlePartySelection();
         }
@@ -431,7 +498,7 @@ public class BattleSystem : MonoBehaviour
         dialogBox.UpdateMoveSelection(currentMove, playerUnit.Pokemon.Moves[currentMove]);
 
         // move선택
-        if(Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             var move = playerUnit.Pokemon.Moves[currentMove];
             if (move.PP == 0) return;
@@ -442,7 +509,7 @@ public class BattleSystem : MonoBehaviour
 
         }
         //X를 누르면 다시 Move선택창으로
-        else if(Input.GetKeyDown(KeyCode.X))
+        else if (Input.GetKeyDown(KeyCode.X))
         {
             dialogBox.EnableMoveSelector(false);
             dialogBox.EnableDialogText(true);
@@ -465,22 +532,22 @@ public class BattleSystem : MonoBehaviour
 
         partyScreen.UpdateMemeberSelection(currentMember);
 
-        if(Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             var selectedMember = playerParty.Pokemons[currentMember];
-            if(selectedMember.HP <=0)
+            if (selectedMember.HP <= 0)
             {
                 partyScreen.SetMessageText("기절한 포켓몬은 선택할수 없습니다!");
                 return;
             }
-            if(selectedMember == playerUnit.Pokemon)
+            if (selectedMember == playerUnit.Pokemon)
             {
                 partyScreen.SetMessageText("같은 포켓몬으로 바꿀수 없습니다!");
                 return;
             }
-        
+
             partyScreen.gameObject.SetActive(false);
-            if(prevState == BattleState.ActionSelection)
+            if (prevState == BattleState.ActionSelection)
             {
                 prevState = null;
                 StartCoroutine(RunTurns(BattleAction.SwitchPokemon));
@@ -491,12 +558,12 @@ public class BattleSystem : MonoBehaviour
                 StartCoroutine(SwitchPokemon(selectedMember));
             }
         }
-        else if(Input.GetKeyDown(KeyCode.X))
+        else if (Input.GetKeyDown(KeyCode.X))
         {
             partyScreen.gameObject.SetActive(false);
             ActionSelection();
         }
-        }
+    }
 
     IEnumerator SwitchPokemon(Pokemon newPokemon)
     {
@@ -513,6 +580,16 @@ public class BattleSystem : MonoBehaviour
         yield return dialogBox.TypeDialog($"가라! {newPokemon.Base.Name}");
 
         state = BattleState.RunningTurn;
-       
+
+    }
+
+    IEnumerator SendNextTrainerPokemon(Pokemon nextPokemon)
+    {
+        state = BattleState.Busy;
+
+        enemyUnit.Setup(nextPokemon);
+        yield return dialogBox.TypeDialog($"{trainer.Name}(이)가 {nextPokemon.Base.name}을 꺼냈다!");
+
+        state = BattleState.RunningTurn;
     }
 }

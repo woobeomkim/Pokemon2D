@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class TrainerController : MonoBehaviour
 {
+    [SerializeField] string name;
+    [SerializeField] Sprite sprite;
     [SerializeField] Dialog dialog;
     [SerializeField] GameObject exclamation;
     [SerializeField] GameObject fov;
     
     Character character;
+
+    public string Name
+    {
+        get => name;
+    }
+
+    public Sprite Sprite
+    {
+        get => sprite;
+    }
 
     private void Awake()
     {
@@ -36,7 +48,7 @@ public class TrainerController : MonoBehaviour
         yield return character.Move(moveVec);
 
         // 대화하기
-        StartCoroutine(DialogManager.Instance.ShowDialog(dialog, () => { Debug.Log("Battle Start"); }));
+        StartCoroutine(DialogManager.Instance.ShowDialog(dialog, () => { GameController.Instance.StartTrainerBattle(this); }));
 
     }
 
