@@ -37,7 +37,7 @@ public class Character : MonoBehaviour
         if(!IsPathClear(targetPos))
             yield break;
         else
-       IsMoving = true;
+            IsMoving = true;
 
         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
@@ -67,6 +67,10 @@ public class Character : MonoBehaviour
         var dir = diff.normalized;
 
         // 자신의위치보다 1보다 커야한다 왜냐하면 자신의위치에서시작하면 바로충돌이 되기때문에.
+        /*
+        Physics2D.BoxCast()는 박스(사각형)를 특정 방향으로 이동시키면서 충돌 검사를 수행하는 함수입니다.
+        즉, 캐릭터가 이동할 경로에 장애물이 있는지 체크하는 역할을 합니다.
+         */
         if (Physics2D.BoxCast(transform.position + dir, new Vector2(0.2f, 0.2f), 0f, dir, diff.magnitude - 1, GameLayers.i.SolidLayer | GameLayers.i.InteractableLayer|GameLayers.i.PlayerLayer))
             return false;
 
@@ -75,6 +79,12 @@ public class Character : MonoBehaviour
 
     public void LookTowards(Vector3 targetPos)
     {
+        /*
+         xdiff, ydiff를 사용해서 현재 위치와 목표 위치의 차이를 계산
+        if (xdiff == 0 || ydiff == 0)를 통해 4방향(좌/우/상/하)만 이동 가능하도록 제한
+        MoveX, MoveY를 Mathf.Clamp(..., -1, 1)로 제한하여 딱 1칸씩 이동하는 값만 설정
+         */
+
         // 타일맵이기때문에 타일맵의 개수를 알고싶다
         var xdiff = Mathf.Floor(targetPos.x) - Mathf.Floor(transform.position.x);
         var ydiff = Mathf.Floor(targetPos.y) - Mathf.Floor(transform.position.y);

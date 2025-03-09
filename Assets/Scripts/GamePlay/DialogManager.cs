@@ -37,7 +37,7 @@ public class DialogManager : MonoBehaviour
 
         IsShowing = true;
         this.dialog = dialog;
-        OnDialogFinished = OnFinished;
+        OnDialogFinished = OnFinished; 
         
         dialogBox.SetActive(true);
         StartCoroutine(TypeDialog(dialog.Lines[0]));

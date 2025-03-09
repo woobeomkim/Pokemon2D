@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     주체(주인공)가 상태가 바뀌면, 그 변화를 자동으로 옵저버에게 알려주기 때문에 옵저버는 변화를 알게 되고, 그에 맞게 반응을 합니다. 즉, 상태 변화가 있을 때 다른 객체들이 자동으로 알림을 받는 시스템입니다.
      */
     public event Action onEncountered;
+    public event Action<Collider2D> OnEnterTrainersView;
+
 
     private Character character;
     private Vector2 input;
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
             if (input != Vector2.zero)
             {
-                StartCoroutine(character.Move(input,CheckForEncounters));
+                StartCoroutine(character.Move(input, OnMoveOver));
             }
         }
         character.HandleUpdate();
@@ -71,6 +73,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnMoveOver()
+    {
+        CheckForEncounters();
+        CheckIfInTraninersView();
+    }
+
     private void CheckForEncounters()
     {
         if (Physics2D.OverlapCircle(transform.position, 0.2f, GameLayers.i.GrassLayer) != null)
@@ -81,6 +89,18 @@ public class PlayerController : MonoBehaviour
                 character.Animator.IsMoving = false;
                 onEncountered();
             }
+        }
+    }
+
+    private void CheckIfInTraninersView()
+    {
+        // 참조를 적게하기위해 반환하는 콜라이더값으로 객체를찾아오자
+        var collider = Physics2D.OverlapCircle(transform.position, 0.2f, GameLayers.i.FovLayer);
+
+        if (collider != null)
+        {
+            character.Animator.IsMoving = false;
+            OnEnterTrainersView?.Invoke(collider);
         }
     }
 }
