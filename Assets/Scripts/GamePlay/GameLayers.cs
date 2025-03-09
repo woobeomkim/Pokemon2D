@@ -7,7 +7,7 @@ public class GameLayers : MonoBehaviour
     [SerializeField] LayerMask solidObjectsLayer;
     [SerializeField] LayerMask interactableLayer;
     [SerializeField] LayerMask grassLayer;
-
+    [SerializeField] LayerMask playerLayer;
 
     /*  
      전통적인 { return ... } 방식	
@@ -45,6 +45,11 @@ public class GameLayers : MonoBehaviour
     public LayerMask GrassLayer
     {
         get => grassLayer;
+    }
+
+    public LayerMask PlayerLayer
+    {
+        get => playerLayer;
     }
 
 }

@@ -34,7 +34,7 @@ public class Character : MonoBehaviour
         targetPos.y += moveVec.y;
 
    
-        if(!IsWalkable(targetPos))
+        if(!IsPathClear(targetPos))
             yield break;
         else
        IsMoving = true;
@@ -58,6 +58,37 @@ public class Character : MonoBehaviour
     public void HandleUpdate()
     {
         animator.IsMoving = IsMoving;
+    }
+
+
+    private bool IsPathClear(Vector3 targetPos) 
+    {
+        var diff = targetPos - transform.position;
+        var dir = diff.normalized;
+
+        // 자신의위치보다 1보다 커야한다 왜냐하면 자신의위치에서시작하면 바로충돌이 되기때문에.
+        if (Physics2D.BoxCast(transform.position + dir, new Vector2(0.2f, 0.2f), 0f, dir, diff.magnitude - 1, GameLayers.i.SolidLayer | GameLayers.i.InteractableLayer|GameLayers.i.PlayerLayer))
+            return false;
+
+        return true;
+    }
+
+    public void LookTowards(Vector3 targetPos)
+    {
+        // 타일맵이기때문에 타일맵의 개수를 알고싶다
+        var xdiff = Mathf.Floor(targetPos.x) - Mathf.Floor(transform.position.x);
+        var ydiff = Mathf.Floor(targetPos.y) - Mathf.Floor(transform.position.y);
+
+        // 캐릭터는 4방향으로 볼수있다
+        if (xdiff == 0 || ydiff == 0)
+        {
+            animator.MoveX = Mathf.Clamp(xdiff, -1f, 1f);
+            animator.MoveY = Mathf.Clamp(ydiff, -1f, 1f);
+        }
+        else
+            Debug.Log("Error in Look Toward : You can't ask the character to look diagnolly");
+
+            
     }
 
     bool IsWalkable(Vector3 targetPos)
