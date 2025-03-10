@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 
 // 배틀 진행상태를 enum 으로 정의
-public enum BattleState { Start, ActionSelection, MoveSelection ,RunningTurn,Busy,PartyScreen,BattleOver}
+public enum BattleState { Start, ActionSelection, MoveSelection ,RunningTurn,Busy,PartyScreen,AboutToUse ,BattleOver}
 public enum BattleAction { Move,SwitchPokemon,UseItem,Run}
 // 배트시스템 전체를 관리
 public class BattleSystem : MonoBehaviour
@@ -27,6 +27,7 @@ public class BattleSystem : MonoBehaviour
     int currentAction; // 현재 선택된행동
     int currentMove; // 현재 선택된 기술
     int currentMember; // 현재 선택된 파티 멤버
+    bool aboutToUseChoice;
 
     PokemonParty playerParty; // 플레이어파티
     PokemonParty trainerParty; // 플레이어파티
@@ -140,6 +141,15 @@ public class BattleSystem : MonoBehaviour
         dialogBox.EnableActionSelector(false);
         dialogBox.EnableDialogText(false);
         dialogBox.EnableMoveSelector(true);
+    }
+
+    IEnumerator AboutToUse(Pokemon newPokemon)
+    {
+        state = BattleState.Busy;
+        yield return StartCoroutine(dialogBox.TypeDialog($"{trainer.Name}(이)가 {newPokemon.Base.Name}을 사용하려합니다. 포켓몬을 바꾸시겠습니까 ?"));
+        state = BattleState.AboutToUse;
+
+        dialogBox.EnableChoiceBox(true);
     }
 
     // 턴 진행을 담당하는 코루틴
@@ -337,6 +347,7 @@ public class BattleSystem : MonoBehaviour
 
             yield return new WaitForSeconds(2f);
             CheckForBattleOver(sourceUnit);
+            yield return new WaitUntil(() => state == BattleState.RunningTurn);
         }
     }
 
@@ -400,7 +411,7 @@ public class BattleSystem : MonoBehaviour
                 var nextPokemon = trainerParty.GetHealthPokemon();
                 if (nextPokemon != null)
                     // Send Out Pokemon
-                    StartCoroutine(SendNextTrainerPokemon(nextPokemon));
+                    StartCoroutine(AboutToUse(nextPokemon));
                 else
                     BattleOver(true);
             }
@@ -433,6 +444,10 @@ public class BattleSystem : MonoBehaviour
         else if (state == BattleState.PartyScreen)
         {
             HandlePartySelection();
+        }
+        else if(state == BattleState.AboutToUse)
+        {
+            HandleAboutToUse();
         }
     }
 
@@ -560,8 +575,22 @@ public class BattleSystem : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
+            if (playerUnit.Pokemon.HP <= 0)
+            {
+                partyScreen.SetMessageText("계속하려면 포켓몬 고르세요!");
+                return;
+            }
+
+
             partyScreen.gameObject.SetActive(false);
-            ActionSelection();
+
+            if (prevState == BattleState.AboutToUse)
+            {
+                prevState = null;
+                StartCoroutine(SendNextTrainerPokemon());
+            }
+            else
+                ActionSelection();
         }
     }
 
@@ -581,15 +610,66 @@ public class BattleSystem : MonoBehaviour
 
         state = BattleState.RunningTurn;
 
+        if (prevState == null)
+        {
+
+            state = BattleState.RunningTurn;
+        }
+        else if (prevState == BattleState.AboutToUse)
+        {
+            prevState = null;
+            StartCoroutine(SendNextTrainerPokemon());
+        }
+
     }
 
-    IEnumerator SendNextTrainerPokemon(Pokemon nextPokemon)
+
+    void HandleAboutToUse()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+            aboutToUseChoice = !aboutToUseChoice;
+
+        dialogBox.UpdateChoiceBox(aboutToUseChoice);
+    
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            dialogBox.EnableChoiceBox(false);
+            if(aboutToUseChoice)
+            {
+                // YES
+                prevState = BattleState.AboutToUse;
+                OpenPartyScreen();
+            }
+            else
+            {
+                StartCoroutine(SendNextTrainerPokemon());
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            dialogBox.EnableChoiceBox(false);
+            StartCoroutine(SendNextTrainerPokemon());
+        }
+
+    }
+    IEnumerator SendNextTrainerPokemon()
     {
         state = BattleState.Busy;
 
-        enemyUnit.Setup(nextPokemon);
-        yield return dialogBox.TypeDialog($"{trainer.Name}(이)가 {nextPokemon.Base.name}을 꺼냈다!");
 
-        state = BattleState.RunningTurn;
+        var nextPokemon = trainerParty.GetHealthPokemon();
+        enemyUnit.Setup(nextPokemon);
+        yield return dialogBox.TypeDialog($"{trainer.Name}(이)가 {nextPokemon.Base.Name}을 꺼냈다!");
+
+        if (prevState == null)
+        {
+
+            state = BattleState.RunningTurn;
+        }
+        else if (prevState == BattleState.AboutToUse)
+        {
+            prevState = null;
+            StartCoroutine(SendNextTrainerPokemon());
+        }
     }
 }
