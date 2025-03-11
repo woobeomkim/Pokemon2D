@@ -417,6 +417,15 @@ public class BattleSystem : MonoBehaviour
             yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {expGain} 의 경험치를 획득했다!");
             yield return playerUnit.Hud.SetExpSmooth();
             // Check Level up
+            // 2레벨업 3레벨업 할수도 있으니 while문으로
+            while(playerUnit.Pokemon.CheckForLevelUp())
+            {
+                playerUnit.Hud.SetLevel();
+                yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {playerUnit.Pokemon.Level}이 되었다!");
+
+                yield return playerUnit.Hud.SetExpSmooth(true);
+            }
+
 
             yield return new WaitForSeconds(1.0F);
         }

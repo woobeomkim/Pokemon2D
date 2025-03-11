@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] string name;
     [SerializeField] Sprite sprite;
+
+    const float offsetY = 0.3f;
     // 게임컨트롤러에서 state패턴을이용해 상태를바꾸려면 
     // 플레이어컨트롤러에서 게임컨트롤러를 참조해야는데 이미 게임컨트롤러에서 플레이어컨트롤러를 참조해 상태에따라 업데이트를하므로
     // 플레이어에에서 게임컨트롤러를 참조하면 순환참조가 일어난다 이를 해결하기위해
@@ -92,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckForEncounters()
     {
-        if (Physics2D.OverlapCircle(transform.position, 0.2f, GameLayers.i.GrassLayer) != null)
+        if (Physics2D.OverlapCircle(transform.position - new Vector3(0,offsetY), 0.2f, GameLayers.i.GrassLayer) != null)
         {
             if (UnityEngine.Random.Range(1, 101) <= 10)
             {
@@ -106,7 +108,7 @@ public class PlayerController : MonoBehaviour
     private void CheckIfInTraninersView()
     {
         // 참조를 적게하기위해 반환하는 콜라이더값으로 객체를찾아오자
-        var collider = Physics2D.OverlapCircle(transform.position, 0.2f, GameLayers.i.FovLayer);
+        var collider = Physics2D.OverlapCircle(transform.position - new Vector3(0,offsetY), 0.2f, GameLayers.i.FovLayer);
 
         if (collider != null)
         {

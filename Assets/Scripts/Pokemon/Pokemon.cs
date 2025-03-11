@@ -11,18 +11,18 @@ public class Pokemon
     // 베이스클래스
     [SerializeField] PokemonBase _base;
     //현재나의레벨
-    [SerializeField] int _level;
+    [SerializeField] int level;
 
     public Pokemon(PokemonBase pBase, int pLevel)
     {
         _base = pBase;
-        _level = pLevel;
+        level = pLevel;
 
         Init();
     }
 
     public PokemonBase Base { get { return _base; } }
-    public int Level { get{ return _level; } }
+    public int Level { get{ return level; } }
 
 
     public int Exp { get; set; }
@@ -170,6 +170,18 @@ public class Pokemon
             Debug.Log($"{stat} has been bossted to {StatBoosts[stat]} ");
         }
     }
+
+    public bool CheckForLevelUp()
+    {
+        if (Exp > Base.GetExpForLevel(level + 1))
+        {
+            ++level;
+            return true;
+        }
+
+        return false;
+    }
+
     // 포켓몬 스탯공식
     // https://bulbapedia.bulbagarden.net/wiki/Stat#Stat_modifiers 
     // 참고
