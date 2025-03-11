@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 
 
 // 배틀 진행상태를 enum 으로 정의
-public enum BattleState { Start, ActionSelection, MoveSelection ,RunningTurn,Busy,PartyScreen,AboutToUse ,BattleOver}
+public enum BattleState { Start, ActionSelection, MoveSelection ,RunningTurn,Busy,PartyScreen,AboutToUse , MoveForget,BattleOver}
 public enum BattleAction { Move,SwitchPokemon,UseItem,Run}
 // 배트시스템 전체를 관리
 public class BattleSystem : MonoBehaviour
@@ -21,6 +22,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] Image playerImage;
     [SerializeField] Image trainerImage;
     [SerializeField] GameObject pokeballSprite;
+    [SerializeField] MoveSelectionUI moveSelectionUI;
 
     public event Action<bool> onBattleOver; //배틀종료이벤트
 
@@ -40,7 +42,7 @@ public class BattleSystem : MonoBehaviour
     TrainerController trainer;
 
     int escapeAttempts;
-
+    MoveBase moveToLearn;
 
     // 배틀시작메서드
     public void StartBattle(PokemonParty playerPary, Pokemon wildPokemon)
@@ -159,6 +161,17 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.AboutToUse;
 
         dialogBox.EnableChoiceBox(true);
+    }
+
+    IEnumerator ChooseMoveToForget(Pokemon pokemon, MoveBase newMove)
+    {
+        state = BattleState.Busy;
+        yield return StartCoroutine(dialogBox.TypeDialog($"잊어버릴 기술을 선택해주세요 !"));
+        moveSelectionUI.gameObject.SetActive(true);
+        moveSelectionUI.SetMoveData(pokemon.Moves.Select(x => x.Base).ToList(), newMove);
+        moveToLearn = newMove;
+
+        state = BattleState.MoveForget;
     }
 
     // 턴 진행을 담당하는 코루틴
@@ -436,6 +449,11 @@ public class BattleSystem : MonoBehaviour
                     else
                     {
                         // TODO 기술한개 지우고 새기술배우기
+                        yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {newMove.Base.Name}을 배우려고한다!");
+                        yield return dialogBox.TypeDialog($"그러나 4개이상의 기술을 배울수가 없다!");
+                        yield return ChooseMoveToForget(playerUnit.Pokemon, newMove.Base);
+                        yield return new WaitUntil(() => state != BattleState.MoveForget);
+                        yield return new WaitForSeconds(2.0F);
                     }
                 }
 
@@ -510,7 +528,32 @@ public class BattleSystem : MonoBehaviour
         {
             HandleAboutToUse();
         }
+        else if(state == BattleState.MoveForget)
+        {
+            Action<int> onMoveSelected = (moveIndex) =>
+            {
+                moveSelectionUI.gameObject.SetActive(false);
+                if(moveIndex == PokemonBase.MaxNumOfMvoes)
+                {
+                    // 기술을 배우지않는다
+                    StartCoroutine(dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {moveToLearn.Name}을 배우지 않았다!"));
+                }
+                else
+                {
+                    // 기술을 잊고 새로운기술을배운다
+                    var selectedMove = playerUnit.Pokemon.Moves[moveIndex].Base;
 
+                    StartCoroutine(dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {selectedMove.Name}을 잊었다!"));
+                    StartCoroutine(dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {moveToLearn.Name}을 배웠다!"));
+                    playerUnit.Pokemon.Moves[moveIndex] = new Move(moveToLearn);
+                }
+
+                moveToLearn = null;
+                state = BattleState.RunningTurn;
+            };
+
+            moveSelectionUI.HandleMoveSelection(onMoveSelected);
+        }
      
     }
 
