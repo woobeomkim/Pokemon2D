@@ -1745,7 +1745,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -217, y: -64}
+  m_AnchoredPosition: {x: -217, y: -64.00003}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &274651551
@@ -2635,6 +2635,7 @@ MonoBehaviour:
   actionSeletor: {fileID: 1741852516}
   moveSeletor: {fileID: 66202944}
   moveDetails: {fileID: 1052685379}
+  choiceBox: {fileID: 0}
   actionTexts:
   - {fileID: 1986000212}
   - {fileID: 216156098}
@@ -2647,6 +2648,8 @@ MonoBehaviour:
   - {fileID: 81491874}
   ppTexts: {fileID: 1899401435}
   typeTexts: {fileID: 169542123}
+  yesText: {fileID: 0}
+  noText: {fileID: 0}
 --- !u!1 &513714086
 GameObject:
   m_ObjectHideFlags: 0
@@ -2849,7 +2852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ff53920f44b534994fa29f135a228e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 
+  name: "\uC8FC\uC778\uACF5"
   sprite: {fileID: 21300000, guid: c89e0b486564244468e98d7ab1f5b2c4, type: 3}
 --- !u!212 &573926860
 SpriteRenderer:
@@ -3950,9 +3953,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 517, y: 222}
+  m_AnchoredPosition: {x: 208.49998, y: 75.16998}
   m_SizeDelta: {x: 200, y: 200}
-  m_Pivot: {x: 2.0284882, y: 1.1570423}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1119272779
 GameObject:
   m_ObjectHideFlags: 0
@@ -13214,6 +13217,8 @@ MonoBehaviour:
     - "? \uD558 \uB610\uC2DC\uC791\uC774\uB124"
     - "% \u314B\u314B \uC9C0\uC625\uC744\uBCF4\uC5EC\uC904\uAC8C"
     - "\uC18D\uB3C4\uC758\uD55C\uACC4\uB97C \uBCF4\uC5EC\uC904\uAC8C \u314B\u314B"
+  dialogAfterBattle:
+    lines: []
   exclamation: {fileID: 750191441}
   fov: {fileID: 1203006617}
 --- !u!114 &1921863630
@@ -13382,6 +13387,7 @@ MonoBehaviour:
   partyScreen: {fileID: 1798601835}
   playerImage: {fileID: 1638955601}
   trainerImage: {fileID: 1154989238}
+  pokeballSprite: {fileID: 3942789320748667323, guid: bf2abcefc66e6314eb1e4e57e94e1fb4, type: 3}
 --- !u!1 &2093496123
 GameObject:
   m_ObjectHideFlags: 0

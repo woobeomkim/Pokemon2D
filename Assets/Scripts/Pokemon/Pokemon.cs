@@ -12,6 +12,15 @@ public class Pokemon
     [SerializeField] PokemonBase _base;
     //현재나의레벨
     [SerializeField] int _level;
+
+    public Pokemon(PokemonBase pBase, int pLevel)
+    {
+        _base = pBase;
+        _level = pLevel;
+
+        Init();
+    }
+
     public PokemonBase Base { get { return _base; } }
     public int Level { get{ return _level; } }
 
@@ -53,6 +62,7 @@ public class Pokemon
         
         HP = MaxHp;
 
+        StatusChanges = new Queue<string>();
         ResetStatBoost();
         Status = null;
         VolatileStatus = null;

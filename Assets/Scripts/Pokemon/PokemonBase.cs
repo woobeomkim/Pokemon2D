@@ -64,6 +64,8 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int spDefense;
     [SerializeField] int speed;
 
+    [SerializeField] int catchRate = 255;
+
     // 설계 : 포켓몬은 각자 배울수있는 기술이 정해져있다 (BASE클래스에 있는게맞다).
     [SerializeField] List<LearanableMove> learanableMoves;
 
@@ -145,6 +147,9 @@ public class PokemonBase : ScriptableObject
 
     public List<LearanableMove> LearanableMoves
         { get { return learanableMoves; } }
+
+    public int CatchRate => catchRate;
+
 }
 
 
