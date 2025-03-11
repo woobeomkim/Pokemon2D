@@ -64,10 +64,28 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int spDefense;
     [SerializeField] int speed;
 
+    [SerializeField] int expYield;
+    [SerializeField] GrowthRate growthRate;
+
     [SerializeField] int catchRate = 255;
 
     // 설계 : 포켓몬은 각자 배울수있는 기술이 정해져있다 (BASE클래스에 있는게맞다).
     [SerializeField] List<LearanableMove> learanableMoves;
+
+    public int GetExpForLevel(int level)
+    {
+        if(growthRate == GrowthRate.Fast)
+        {
+            return 4 * (level * level * level) / 5;
+        }
+        else if(growthRate == GrowthRate.MediumFast)
+        {
+            return level * level * level;
+        }
+
+        // error
+        return -1;
+    }
 
     /*
      Property는 필드값을 제어하기위한 C#의 특별한멤버
@@ -150,6 +168,9 @@ public class PokemonBase : ScriptableObject
 
     public int CatchRate => catchRate;
 
+    public int ExpYield => expYield;
+
+    public GrowthRate GrowthRate => growthRate;
 }
 
 
@@ -188,6 +209,11 @@ public enum PokemonType
     Rock,
     Ghost,
     Dragon,
+}
+
+public enum GrowthRate
+{
+    Fast, MediumFast,
 }
 
 //강화할수있는값들을 따로 Stat enum으로 빼줬다.

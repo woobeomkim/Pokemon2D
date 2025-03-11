@@ -24,6 +24,8 @@ public class Pokemon
     public PokemonBase Base { get { return _base; } }
     public int Level { get{ return _level; } }
 
+
+    public int Exp { get; set; }
     public int HP { get; set; }
 
     // 내가가지고잇는 Moves
@@ -58,6 +60,9 @@ public class Pokemon
             if (Moves.Count >= 4)
                 break;
         }
+        
+        Exp = Base.GetExpForLevel(Level);
+
         CalculateStats();
         
         HP = MaxHp;
