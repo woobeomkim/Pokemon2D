@@ -423,6 +423,22 @@ public class BattleSystem : MonoBehaviour
                 playerUnit.Hud.SetLevel();
                 yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {playerUnit.Pokemon.Level}이 되었다!");
 
+                // Try to Learn a new Move
+                var newMove = playerUnit.Pokemon.GetLearnableMoveAtCurrLevel();
+                if( newMove != null)
+                {
+                    if (playerUnit.Pokemon.Moves.Count  < PokemonBase.MaxNumOfMvoes)
+                    {
+                        playerUnit.Pokemon.LearnMove(newMove);
+                        yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {newMove.Base.Name}을 배웠다!");
+                        dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
+                    }
+                    else
+                    {
+                        // TODO 기술한개 지우고 새기술배우기
+                    }
+                }
+
                 yield return playerUnit.Hud.SetExpSmooth(true);
             }
 

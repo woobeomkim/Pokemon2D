@@ -57,7 +57,7 @@ public class Pokemon
             if (move.Level <= Level)
                 Moves.Add(new Move(move.Base));
 
-            if (Moves.Count >= 4)
+            if (Moves.Count >= PokemonBase.MaxNumOfMvoes)
                 break;
         }
         
@@ -180,6 +180,19 @@ public class Pokemon
         }
 
         return false;
+    }
+
+    public LearnableMove GetLearnableMoveAtCurrLevel()
+    {
+        return Base.LearanableMoves.Where(x => x.Level == level).FirstOrDefault();
+    }
+
+    public void LearnMove(LearnableMove moveToLearn)
+    {
+        if (Moves.Count > PokemonBase.MaxNumOfMvoes)
+            return;
+
+        Moves.Add(new Move(moveToLearn.Base));
     }
 
     // 포켓몬 스탯공식

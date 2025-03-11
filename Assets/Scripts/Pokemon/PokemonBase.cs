@@ -70,8 +70,9 @@ public class PokemonBase : ScriptableObject
     [SerializeField] int catchRate = 255;
 
     // 설계 : 포켓몬은 각자 배울수있는 기술이 정해져있다 (BASE클래스에 있는게맞다).
-    [SerializeField] List<LearanableMove> learanableMoves;
+    [SerializeField] List<LearnableMove> learnableMoves;
 
+    public static int MaxNumOfMvoes { get; set; } = 4;
     public int GetExpForLevel(int level)
     {
         if(growthRate == GrowthRate.Fast)
@@ -163,8 +164,8 @@ public class PokemonBase : ScriptableObject
         get { return speed; }
     }
 
-    public List<LearanableMove> LearanableMoves
-        { get { return learanableMoves; } }
+    public List<LearnableMove> LearanableMoves
+        { get { return learnableMoves; } }
 
     public int CatchRate => catchRate;
 
@@ -178,7 +179,7 @@ public class PokemonBase : ScriptableObject
 // 직렬화는 객체 데이터를 저장하거나 네트워크를 통해 전송할 수 있도록 변환하는 과정입니다.
 // 유니티에서는 Inspector에서 데이터를 편집하거나, JSON/파일 저장을 할 때 직렬화가 필요합니다.
 [System.Serializable]
-public class LearanableMove
+public class LearnableMove
 {
     // 배울수있는 기술 클래스에는 
     // 기술과 몇렙에 배울수있는 속성이있다.
