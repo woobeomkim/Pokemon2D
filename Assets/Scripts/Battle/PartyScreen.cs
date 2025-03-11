@@ -25,7 +25,7 @@ public class PartyScreen : MonoBehaviour
          한 단계 아래 자식만 찾고 싶다면?
          transform.GetComponent<T>()를 사용하여 직접 탐색해야 함
          */
-        memberSlots = GetComponentsInChildren<PartyMemberUI>();
+        memberSlots = GetComponentsInChildren<PartyMemberUI>(true);
     }
 
     public void SetPartyData(List<Pokemon> pokemons)
@@ -33,8 +33,11 @@ public class PartyScreen : MonoBehaviour
         this.pokemons = pokemons;
         for (int i = 0; i < memberSlots.Length; i++)
         {
-            if(i<pokemons.Count)
+            if (i < pokemons.Count)
+            {
+                memberSlots[i].gameObject.SetActive(true);
                 memberSlots[i].SetData(pokemons[i]);
+            }
             else
                 memberSlots[i].gameObject.SetActive(false);
         }

@@ -39,6 +39,9 @@ public class BattleSystem : MonoBehaviour
     PlayerController player;
     TrainerController trainer;
 
+    int escapeAttempts;
+
+
     // 배틀시작메서드
     public void StartBattle(PokemonParty playerPary, Pokemon wildPokemon)
     {
@@ -110,6 +113,8 @@ public class BattleSystem : MonoBehaviour
             yield return dialogBox.TypeDialog($"가라 {playerPokemon.Base.name}!");
             dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
         }
+
+        escapeAttempts = 0;
         partyScreen.Init(); // 파티화면초기화
         //플레이어 행동시작
 
@@ -209,6 +214,11 @@ public class BattleSystem : MonoBehaviour
             {
                 dialogBox.EnableActionSelector(false);
                 yield return ThrowPokeball();
+            }
+            else if (playerAction == BattleAction.Run)
+            {
+                dialogBox.EnableActionSelector(false);
+                yield return TryToEscape();
             }
             // EnumyTurn
 
@@ -501,6 +511,7 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 3)
             {
                 // Run
+                StartCoroutine(RunTurns(BattleAction.Run));
             }
         }
     }
@@ -763,5 +774,44 @@ public class BattleSystem : MonoBehaviour
         }
 
         return shakeCount;
+    }
+
+    IEnumerator TryToEscape()
+    {
+        state = BattleState.Busy;
+
+        if(isTrainerBattle)
+        {
+            yield return dialogBox.TypeDialog($"트레이너 배틀에서는 도망갈수 없다!");
+            state = BattleState.RunningTurn;
+            yield break;
+        }
+
+        ++escapeAttempts;
+
+        int playerSpeed = playerUnit.Pokemon.Speed;
+        int enemySpeed = enemyUnit.Pokemon.Speed;
+
+        if(enemySpeed < playerSpeed)
+        {
+            yield return dialogBox.TypeDialog($"안전하게 도망쳤다!");
+            BattleOver(true);
+        }
+        else
+        {
+            float f = (playerSpeed * 128) / enemySpeed + 30 * escapeAttempts;
+            f = f % 256;
+
+            if(UnityEngine.Random.Range(0,256) < f)
+            {
+                yield return dialogBox.TypeDialog($"안전하게 도망쳤다!");
+                BattleOver(true);
+            }
+            else
+            {
+                yield return dialogBox.TypeDialog($"도망칠수없다!");
+                state = BattleState.RunningTurn;
+            }
+        }
     }
 }
