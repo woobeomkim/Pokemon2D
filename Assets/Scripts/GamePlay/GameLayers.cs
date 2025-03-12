@@ -9,6 +9,7 @@ public class GameLayers : MonoBehaviour
     [SerializeField] LayerMask grassLayer;
     [SerializeField] LayerMask playerLayer;
     [SerializeField] LayerMask fovLayer;
+    [SerializeField] LayerMask portalLayer;
     /*  
      전통적인 { return ... } 방식	
      get { return value; }	- C#에서 가장 기본적인 프로퍼티 문법
@@ -55,5 +56,15 @@ public class GameLayers : MonoBehaviour
     public LayerMask FovLayer
     {
         get => fovLayer;
+    }
+
+    public LayerMask PortalLayer
+    {
+        get => portalLayer;
+    }
+
+    public LayerMask TriggerableLayers
+    {
+        get => grassLayer | fovLayer | portalLayer;
     }
 }
