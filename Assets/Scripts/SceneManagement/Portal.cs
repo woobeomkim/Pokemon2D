@@ -16,17 +16,26 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
         this.player = player;
         StartCoroutine(SwitchScene());
     }
+
+    Fader fader;
+    private void Start()
+    {
+        fader = FindObjectOfType<Fader>();
+    }
     IEnumerator SwitchScene()
     {
         // 로직 실행전에 파괴방지
         DontDestroyOnLoad(gameObject);
 
         GameController.Instance.PausedGame(true);
+        yield return fader.FadeIn(0.5f);
 
         yield return  SceneManager.LoadSceneAsync(sceneToLoad);
 
         var desPortal = FindObjectsOfType<Portal>().First(x => x != this && x.destinationPortal == this.destinationPortal);
         player.Character.SetPositionAndSnapToTile(desPortal.SpawnPoint.position);
+
+        yield return fader.FadeOut(0.5f);
 
         GameController.Instance.PausedGame(false);
         // 로직 실행후 파괴
