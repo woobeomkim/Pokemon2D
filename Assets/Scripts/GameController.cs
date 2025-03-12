@@ -8,6 +8,7 @@ public enum GameState
     Battle,
     Dialog,
     Cutscene,
+    Paused,
 }
 
 public class GameController : MonoBehaviour
@@ -18,6 +19,7 @@ public class GameController : MonoBehaviour
 
     GameState state;
 
+    GameState stateBeforePause;
     public static GameController Instance { get; private set; } 
 
 
@@ -42,6 +44,19 @@ public class GameController : MonoBehaviour
             if(state == GameState.Dialog)
                 state = GameState.FreeRoam;
         };
+    }
+
+    public void PausedGame(bool pause)
+    {
+        if(pause)
+        {
+            stateBeforePause = state;
+            state = GameState.Paused;
+        }
+        else
+        {
+            state = stateBeforePause;
+        }
     }
 
     public void StartBattle()
