@@ -6,7 +6,6 @@ using UnityEngine.UI;
 // 배틀 대화상자를 조작하는 클래스
 public class BattleDialogBox : MonoBehaviour
 {
-    [SerializeField] Color highlightedColor;
     [SerializeField] int lettersPerSecond;
 
     [SerializeField] Text dialogText;
@@ -23,6 +22,12 @@ public class BattleDialogBox : MonoBehaviour
     [SerializeField] Text yesText;
     [SerializeField] Text noText;
 
+    Color highlightedColor;
+
+    private void Start()
+    {
+        highlightedColor = GlobalSettings.i.HighlightedColor;
+    }
     public void SetDialog(string dialog)
     {
         dialogText.text = dialog;
