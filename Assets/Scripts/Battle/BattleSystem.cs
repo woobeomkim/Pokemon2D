@@ -543,8 +543,7 @@ public class BattleSystem : MonoBehaviour
                     // 기술을 잊고 새로운기술을배운다
                     var selectedMove = playerUnit.Pokemon.Moves[moveIndex].Base;
 
-                    StartCoroutine(dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {selectedMove.Name}을 잊었다!"));
-                    StartCoroutine(dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {moveToLearn.Name}을 배웠다!"));
+                    StartCoroutine(dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {selectedMove.Name}을 잊고 {moveToLearn.Name}을 배웠다!"));                    
                     playerUnit.Pokemon.Moves[moveIndex] = new Move(moveToLearn);
                 }
 
