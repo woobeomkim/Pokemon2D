@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,13 @@ public class PartyScreen : MonoBehaviour
     PartyMemberUI[] memberSlots;
     List<Pokemon> pokemons;
 
+    int selection = 0;
+
+    public Pokemon SelectedMember => pokemons[selection];
+
+
+    //PartyScreen은 ActionSelection, RunningTurn, AboutToUse와 같은 다양한 상태에서 호출될 수 있습니다.
+    public BattleState? CalledFrom { get; set; }
     public void Init()
     {
         /*
@@ -42,7 +50,37 @@ public class PartyScreen : MonoBehaviour
                 memberSlots[i].gameObject.SetActive(false);
         }
 
+        UpdateMemeberSelection(selection);
+
         messageText.text = "포켓몬을 고르세요!";
+    }
+
+    public void HandleUpdate(Action onSelected, Action onBack)
+    {
+        var previousSelection = selection;
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            ++selection;
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            --selection;
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+            selection += 2;
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+            selection -= 2;
+
+        selection = Mathf.Clamp(selection, 0, pokemons.Count - 1);
+
+        if(selection != previousSelection)
+            UpdateMemeberSelection(selection);
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+           onSelected?.Invoke();
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            onBack?.Invoke();
+        }
     }
 
     public void UpdateMemeberSelection(int selectedMember)
