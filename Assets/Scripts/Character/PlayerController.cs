@@ -8,7 +8,7 @@ using UnityEngine;
    CompositeCollider -> 각 충돌체를 하나의 큰충돌체로 만들어 성능부하를 줄임
    Rigidbody static설정 -> 물리계산기능을꺼서 충돌할수있는 역할로만만든다.
  */
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ISavable
 {
     [SerializeField] string name;
     [SerializeField] Sprite sprite;
@@ -86,4 +86,15 @@ public class PlayerController : MonoBehaviour
       }
     }
 
+    public object CaptureState()
+    {
+        float[] position = new float[] { transform.position.x, transform.position.y };
+        return position;
+    }
+
+    public void RestoreState(object state)
+    {
+        var position = (float[])state;
+        transform.position = new Vector3(position[0], position[1]);
+    }
 }
