@@ -39,6 +39,10 @@ public class GameController : MonoBehaviour
 
         menuController = GetComponent<MenuController>();
 
+        // 마우스 잠금모드
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+
         PokemonDB.Init();
         MoveDB.Init();
         ConditionsDB.Init();

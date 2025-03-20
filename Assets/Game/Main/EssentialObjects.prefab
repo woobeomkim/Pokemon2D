@@ -4307,6 +4307,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -25
       objectReference: {fileID: 0}
+    - target: {fileID: 259554634760774599, guid: ef0a10b4aa0d6bc4380066a322af0e13, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 294348585361754366, guid: ef0a10b4aa0d6bc4380066a322af0e13, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -4841,7 +4845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5694201082663452450, guid: ef0a10b4aa0d6bc4380066a322af0e13, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6077489755760593585, guid: ef0a10b4aa0d6bc4380066a322af0e13, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5405,6 +5409,28 @@ MonoBehaviour:
     count: 6
   - item: {fileID: 11400000, guid: 38409b9e3b07e984e83115f85cfd514e, type: 2}
     count: 5
+  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    count: 2
+  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    count: 2
+  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    count: 2
+  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    count: 2
+  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    count: 2
+  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    count: 2
+  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    count: 2
+  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    count: 2
+  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    count: 2
+  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    count: 2
+  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    count: 2
   - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
     count: 2
 --- !u!4 &6467844877651979719 stripped
