@@ -10,6 +10,7 @@ public enum GameState
     Dialog,
     Menu,
     PartyScreen,
+    Bag,
     Cutscene,
     Paused,
 }
@@ -20,6 +21,7 @@ public class GameController : MonoBehaviour
     [SerializeField] BattleSystem battleSystem;
     [SerializeField] Camera worldCamera;
     [SerializeField] PartyScreen partyScreen;
+    [SerializeField] InventoryUI inventoryUI;
 
     GameState state;
 
@@ -170,6 +172,17 @@ public class GameController : MonoBehaviour
 
             partyScreen.HandleUpdate(onSelected, onBack);
         }
+        else if (state == GameState.Bag)
+        {
+            Action onBack = () =>
+            {
+                inventoryUI.gameObject.SetActive(false);
+                state = GameState.FreeRoam;
+            };
+
+            inventoryUI.HandleUpdate(onBack);
+        }
+        
 
     }
 
@@ -191,6 +204,8 @@ public class GameController : MonoBehaviour
         else if (selectedItem == 1)
         {
             // Bag
+            inventoryUI.gameObject.SetActive(true);
+            state = GameState.Bag;
         }
         else if (selectedItem == 2)
         {
