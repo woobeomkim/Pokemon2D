@@ -46,7 +46,7 @@ public class MenuController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Z))
         {
-           OnMenuSelected?.Invoke(selectedItem);
+            OnMenuSelected?.Invoke(selectedItem);
             CloseMenu();
         }
         else if(Input.GetKeyDown(KeyCode.X))
