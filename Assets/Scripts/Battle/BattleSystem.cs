@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 
 // 배틀 진행상태를 enum 으로 정의
-public enum BattleState { Start, ActionSelection, MoveSelection ,RunningTurn,Busy,PartyScreen,AboutToUse , MoveForget,BattleOver}
+public enum BattleState { Start, ActionSelection, MoveSelection ,RunningTurn,Busy,Bag,PartyScreen,AboutToUse , MoveForget,BattleOver}
 public enum BattleAction { Move,SwitchPokemon,UseItem,Run}
 // 배트시스템 전체를 관리
 public class BattleSystem : MonoBehaviour
@@ -23,6 +23,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] Image trainerImage;
     [SerializeField] GameObject pokeballSprite;
     [SerializeField] MoveSelectionUI moveSelectionUI;
+    [SerializeField] InventoryUI inventoryUI;
 
     public event Action<bool> onBattleOver; //배틀종료이벤트
 
@@ -137,6 +138,13 @@ public class BattleSystem : MonoBehaviour
         dialogBox.EnableActionSelector(true);
     }
 
+    void OpenBag()
+    {
+        state = BattleState.Bag;
+        inventoryUI.gameObject.SetActive(true);
+
+    }
+
     void OpenPartyScreen()
     {
         partyScreen.CalledFrom = state;
@@ -223,8 +231,9 @@ public class BattleSystem : MonoBehaviour
             }
             else if(playerAction == BattleAction.UseItem)
             {
+
                 dialogBox.EnableActionSelector(false);
-                yield return ThrowPokeball();
+           
             }
             else if (playerAction == BattleAction.Run)
             {
@@ -270,7 +279,7 @@ public class BattleSystem : MonoBehaviour
         if (!canRunMove)
         {
             yield return ShowStatusChanges(sourceUnit.Pokemon);
-            yield return sourceUnit.Hud.UpdateHP();
+            yield return sourceUnit.Hud.WaitForHPUpdate();
             yield break;
         }
         // 상태 변화 출력
@@ -299,7 +308,7 @@ public class BattleSystem : MonoBehaviour
             {   // 데미지를 입는다 
                 // 데미지 계산 후 HP 감소
                 var damageDetails = targetUnit.Pokemon.TakeDamage(move, sourceUnit.Pokemon);
-                yield return targetUnit.Hud.UpdateHP();
+                yield return targetUnit.Hud.WaitForHPUpdate();
                 yield return ShowDamageDetails(damageDetails);
             }
             // 부가 효과 처리 (추가 상태 이상 등)
@@ -362,7 +371,7 @@ public class BattleSystem : MonoBehaviour
         // 화상이나 독 상태에 걸려 턴이후 데미지를 입는지
         sourceUnit.Pokemon.OnAfterTurn();
         yield return ShowStatusChanges(sourceUnit.Pokemon);
-        yield return sourceUnit.Hud.UpdateHP();
+        yield return sourceUnit.Hud.WaitForHPUpdate();
 
         if (sourceUnit.Pokemon.HP <= 0)
         {
@@ -522,6 +531,23 @@ public class BattleSystem : MonoBehaviour
         {
             HandlePartySelection();
         }
+        else if(state == BattleState.Bag)
+        {
+            Action onBack = () =>
+            {
+                inventoryUI.gameObject.SetActive(false);
+                state = BattleState.ActionSelection;
+            };
+
+            Action onItemUsed = () =>
+            {
+                state = BattleState.Busy;
+                inventoryUI.gameObject.SetActive(false);
+                StartCoroutine(RunTurns(BattleAction.UseItem));
+            };
+
+            inventoryUI.HandleUpdate(onBack, onItemUsed);
+        }
         else if(state == BattleState.AboutToUse)
         {
             HandleAboutToUse();
@@ -583,7 +609,8 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 1)
             {
                 // Bag
-                StartCoroutine(RunTurns(BattleAction.UseItem));
+                //StartCoroutine(RunTurns(BattleAction.UseItem));
+                OpenBag();
             }
             else if (currentAction == 2)
             {
