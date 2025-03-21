@@ -5,6 +5,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum InventoryUIState { ItemSelection, PartySelection, Busy }
+
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] GameObject itemList;
@@ -16,6 +18,8 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] GameObject upArrow;
     [SerializeField] GameObject downArrow;
 
+    [SerializeField] PartyScreen partyScreen;
+
     int selectedItem = 0;
 
     const int itemsInViewport = 8;
@@ -23,6 +27,7 @@ public class InventoryUI : MonoBehaviour
     List<ItemSlotUI> slotUIList;
 
     Inventory inventory;
+    InventoryUIState state;
 
     RectTransform itemListRect;
     private void Awake()
@@ -34,6 +39,8 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         UpdateItemList();
+
+        inventory.OnUpdated += UpdateItemList;
     }
 
     void UpdateItemList()
@@ -60,23 +67,59 @@ public class InventoryUI : MonoBehaviour
 
     public void HandleUpdate(Action onBack)
     {
-        int prevSelected = selectedItem;
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-            selectedItem++;
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-            selectedItem--;
-
-
-        selectedItem = Mathf.Clamp(selectedItem, 0, inventory.Slots.Count - 1);
-
-        if (prevSelected != selectedItem)
-            UpdateItemSelection();
-
-        if (Input.GetKeyDown(KeyCode.X))
+        if(state == InventoryUIState.ItemSelection)
         {
-            onBack?.Invoke();
+
+            int prevSelected = selectedItem;
+
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+                selectedItem++;
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+                selectedItem--;
+
+
+            selectedItem = Mathf.Clamp(selectedItem, 0, inventory.Slots.Count - 1);
+
+            if (prevSelected != selectedItem)
+                UpdateItemSelection();
+
+            if (Input.GetKeyDown(KeyCode.Z))
+                OpenPartyScreen();
+            else if (Input.GetKeyDown(KeyCode.X))
+                onBack?.Invoke();
         }
+        else if(state == InventoryUIState.PartySelection)
+        {
+            Action onSelected = () =>
+            {
+                StartCoroutine(UseItem()); 
+            };
+
+            Action onBackPartyScreen = () =>
+            {
+                ClosePartyScreen();
+            };
+
+            partyScreen.HandleUpdate(onSelected, onBackPartyScreen);
+        }
+
+    }
+
+    IEnumerator UseItem()
+    {
+        state = InventoryUIState.Busy;
+
+        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember);
+        if(usedItem != null)
+        {
+            yield return DialogManager.Instance.ShowDialogText($"{usedItem.Name} 을 사용했다.");
+        }
+        else
+        {
+            yield return DialogManager.Instance.ShowDialogText("효과가 없는 아이템 입니다.");
+        }
+
+        ClosePartyScreen();
     }
 
     void UpdateItemSelection()
@@ -98,6 +141,9 @@ public class InventoryUI : MonoBehaviour
 
     void HandleScrolling()
     {
+        if (slotUIList.Count <= itemsInViewport)
+            return;
+
         float scrollPos = Mathf.Clamp(selectedItem - itemsInViewport / 2, 0, selectedItem) * slotUIList[0].Height;
         itemListRect.localPosition = new Vector2(itemListRect.localPosition.x, scrollPos);
 
@@ -106,5 +152,17 @@ public class InventoryUI : MonoBehaviour
         bool showDownArrow = selectedItem + itemsInViewport / 2 < inventory.Slots.Count;
         downArrow.gameObject.SetActive(showDownArrow);
 
+    }
+
+    void OpenPartyScreen()
+    {
+        state = InventoryUIState.PartySelection;
+        partyScreen.gameObject.SetActive(true);
+    }
+
+    void ClosePartyScreen()
+    {
+        state = InventoryUIState.ItemSelection;
+        partyScreen.gameObject.SetActive(false);
     }
 }

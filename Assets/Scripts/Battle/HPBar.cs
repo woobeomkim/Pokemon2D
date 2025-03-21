@@ -9,7 +9,8 @@ public class HPBar : MonoBehaviour
 
     public void SetHP(float normalizedHP)
     {
-        health.transform.localScale = new Vector3(normalizedHP, 1.0f);
+        health.transform.localScale = new Vector3(normalizedHP, 1.0f, 0.0f);
+       Debug.Log($"HP set to {normalizedHP}");
     }
 
     public IEnumerator SetHPSmooth(float newHp)

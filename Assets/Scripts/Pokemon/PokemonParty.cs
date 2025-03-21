@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,15 @@ public class PokemonParty : MonoBehaviour
     // SerializeFiled를 하려면 Pokemon내부클래스에서도 변수가 SerializeFiled여야함
     [SerializeField] List<Pokemon> pokemons;
 
+    public event Action onUpdated;
     public List<Pokemon> Pokemons
     {
         get { return pokemons; }
-        set { pokemons = value; }
+        set 
+        {
+            pokemons = value; 
+            onUpdated?.Invoke(); 
+        }
     }
 
     private void Start()
@@ -42,10 +48,16 @@ public class PokemonParty : MonoBehaviour
         if (pokemons.Count < 6)
         {
             pokemons.Add(newPokemon);
+            onUpdated?.Invoke();
         }
         else
         {
             // TODO : PC에집어넣기 
         }
+    }
+
+    public static PokemonParty GetPlayerParty()
+    {
+        return FindObjectOfType<PlayerController>().GetComponent<PokemonParty>();
     }
 }
