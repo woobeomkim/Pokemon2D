@@ -21,7 +21,7 @@ public class InventoryUI : MonoBehaviour
 
     [SerializeField] PartyScreen partyScreen;
 
-    Action onItemUsed;
+    Action<ItemBase> onItemUsed;
 
     int selectedItem = 0;
     int selectedCategory = 0;
@@ -69,7 +69,7 @@ public class InventoryUI : MonoBehaviour
 
     }
 
-    public void HandleUpdate(Action onBack, Action onItemUsed = null)
+    public void HandleUpdate(Action onBack, Action<ItemBase> onItemUsed = null)
     {
         this.onItemUsed = onItemUsed;
 
@@ -109,7 +109,7 @@ public class InventoryUI : MonoBehaviour
                 UpdateItemSelection();
 
             if (Input.GetKeyDown(KeyCode.Z))
-                OpenPartyScreen();
+                ItemSelected();
             else if (Input.GetKeyDown(KeyCode.X))
                 onBack?.Invoke();
         }
@@ -130,6 +130,18 @@ public class InventoryUI : MonoBehaviour
 
     }
 
+    void ItemSelected()
+    {
+        if(selectedCategory == (int)ItemCategory.Pokeballs)
+        {
+            StartCoroutine(UseItem());
+        }
+        else
+        {
+            OpenPartyScreen();
+        }
+    }
+
     IEnumerator UseItem()
     {
         state = InventoryUIState.Busy;
@@ -137,8 +149,9 @@ public class InventoryUI : MonoBehaviour
         var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
         if(usedItem != null)
         {
-            yield return DialogManager.Instance.ShowDialogText($"{usedItem.Name} 을 사용했다.");
-            onItemUsed?.Invoke();
+            if(!(usedItem is PokeballItem))
+                yield return DialogManager.Instance.ShowDialogText($"{usedItem.Name} 을 사용했다.");
+            onItemUsed?.Invoke(usedItem);
         }
         else
         {

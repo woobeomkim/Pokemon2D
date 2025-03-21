@@ -33,6 +33,8 @@ public class GameController : MonoBehaviour
 
     MenuController menuController;
 
+    public GameState State => state;
+
     private void Awake()
     {
         Instance = this;

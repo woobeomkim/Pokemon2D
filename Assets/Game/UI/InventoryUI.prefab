@@ -296,7 +296,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6725677064653322396}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.91512
+  m_Size: 0.4951475
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1698,11 +1698,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemList: {fileID: 7364571607404836014}
   itemSlotUI: {fileID: 7051141155546247797}
+  categoryText: {fileID: 7638341593083828491}
   itemIcon: {fileID: 4495120059599977610}
   itemDescription: {fileID: 1312906358406059820}
   upArrow: {fileID: 538423209854073210}
   downArrow: {fileID: 8048014076826144491}
-  partyScreen: {fileID: 0}
+  partyScreen: {fileID: 1992167591113918801, guid: 9655599db71d2fe438b7656cd4dbba45, type: 3}
 --- !u!1 &5255869782324540760
 GameObject:
   m_ObjectHideFlags: 0
@@ -2267,7 +2268,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 2087.8838}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1610022920073739663
