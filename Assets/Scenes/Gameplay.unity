@@ -1835,6 +1835,26 @@ PrefabInstance:
       propertyPath: slots.Array.size
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8142141539716786886, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: pokeballSlots.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8142141539716786886, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: pokeballSlots.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 539ac2a3c0338ae4d927df29192d58f5, type: 2}
+    - target: {fileID: 8142141539716786886, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: pokeballSlots.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 6f0656f717b4bc741bf75920552aaa38, type: 2}
+    - target: {fileID: 8142141539716786886, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: pokeballSlots.Array.data[0].count
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8142141539716786886, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: pokeballSlots.Array.data[1].count
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8151115776554998744, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
