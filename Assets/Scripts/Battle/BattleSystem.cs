@@ -127,6 +127,8 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.BattleOver;
         playerParty.Pokemons.ForEach(p => p.OnBattleOver()); // 모든포켓몬 상태 초기화
+        playerUnit.Hud.ClearData();
+        enemyUnit.Hud.ClearData();
         onBattleOver(won); // 배틀종료이벤트
     }
 
