@@ -451,7 +451,7 @@ public class BattleSystem : MonoBehaviour
                 {
                     if (playerUnit.Pokemon.Moves.Count  < PokemonBase.MaxNumOfMvoes)
                     {
-                        playerUnit.Pokemon.LearnMove(newMove);
+                        playerUnit.Pokemon.LearnMove(newMove.Base);
                         yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {newMove.Base.Name}을 배웠다!");
                         dialogBox.SetMoveNames(playerUnit.Pokemon.Moves);
                     }

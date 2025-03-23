@@ -223,12 +223,17 @@ public class Pokemon
         return Base.LearanableMoves.Where(x => x.Level == level).FirstOrDefault();
     }
 
-    public void LearnMove(LearnableMove moveToLearn)
+    public void LearnMove(MoveBase moveToLearn)
     {
         if (Moves.Count > PokemonBase.MaxNumOfMvoes)
             return;
 
-        Moves.Add(new Move(moveToLearn.Base));
+        Moves.Add(new Move(moveToLearn));
+    }
+
+    public bool HasMove(MoveBase moveToCheck)
+    {
+        return Moves.Count(m => m.Base == moveToCheck) > 0;
     }
 
     // 포켓몬 스탯공식
