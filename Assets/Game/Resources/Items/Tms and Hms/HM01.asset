@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2dd3800aa0fd154089cf9f3c48fc462, type: 3}
-  m_Name: TM02
+  m_Name: HM01
   m_EditorClassIdentifier: 
-  name: TM02
-  description: "\uD3EC\uCF13\uBAAC\uC5D0\uAC8C \uB178\uB798\uD558\uAE30\uC744 \uAC00\uB974\uCE60\uC218\uC788\uB2E4."
+  name: HM01
+  description: "\uC790\uB974\uAE30\uB97C \uD3EC\uCF13\uBAAC\uC5D0\uC11C \uAC00\uB974\uCE5C\uB2E4"
   icon: {fileID: 1502958087, guid: 3ae12697ae504414bbf0797ea36dfddd, type: 3}
-  move: {fileID: 11400000, guid: 2c184cf087a9a5c4596d26f56c4cb105, type: 2}
+  move: {fileID: 11400000, guid: b3d4ba98b79ebd1439d86d6c7ef5bfba, type: 2}
+  isHM: 1

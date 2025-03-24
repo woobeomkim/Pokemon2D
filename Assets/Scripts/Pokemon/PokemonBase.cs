@@ -71,6 +71,7 @@ public class PokemonBase : ScriptableObject
 
     // 설계 : 포켓몬은 각자 배울수있는 기술이 정해져있다 (BASE클래스에 있는게맞다).
     [SerializeField] List<LearnableMove> learnableMoves;
+    [SerializeField] List<MoveBase> learnableByItems;
 
     public static int MaxNumOfMvoes { get; set; } = 4;
     public int GetExpForLevel(int level)
@@ -164,8 +165,11 @@ public class PokemonBase : ScriptableObject
         get { return speed; }
     }
 
-    public List<LearnableMove> LearanableMoves
+    public List<LearnableMove> LearnableMoves
         { get { return learnableMoves; } }
+
+
+    public List<MoveBase> LearnableByItems => learnableByItems;
 
     public int CatchRate => catchRate;
 

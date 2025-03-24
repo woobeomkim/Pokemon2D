@@ -53,7 +53,7 @@ public class Pokemon
     {
         // Generate Mvoes
         Moves = new List<Move>();
-        foreach (var move in Base.LearanableMoves)
+        foreach (var move in Base.LearnableMoves)
         {
             if (move.Level <= Level)
                 Moves.Add(new Move(move.Base));
@@ -220,7 +220,7 @@ public class Pokemon
 
     public LearnableMove GetLearnableMoveAtCurrLevel()
     {
-        return Base.LearanableMoves.Where(x => x.Level == level).FirstOrDefault();
+        return Base.LearnableMoves.Where(x => x.Level == level).FirstOrDefault();
     }
 
     public void LearnMove(MoveBase moveToLearn)

@@ -99,6 +99,22 @@ public class PartyScreen : MonoBehaviour
                 memberSlots[i].SetSelected(false);
         }
     }
+    public void ShowIfTmIsUsable(TmItem TmItem)
+    {
+        for (int i = 0; i < pokemons.Count; i++)
+        {
+            string message = TmItem.CanBeTaught(pokemons[i]) ? "배울수있다!" : "배울수없다!";
+            memberSlots[i].SetMessage(message);
+        }
+    }
+
+    public void ClearMemeberSlotMessages()
+    {
+        for (int i = 0; i < pokemons.Count; i++)
+        { 
+            memberSlots[i].SetMessage("");
+        }
+    }
 
     public void SetMessageText(string message)
     {
