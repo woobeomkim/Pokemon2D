@@ -58,7 +58,7 @@ public class Pokemon
             if (move.Level <= Level)
                 Moves.Add(new Move(move.Base));
 
-            if (Moves.Count >= PokemonBase.MaxNumOfMvoes)
+            if (Moves.Count >= PokemonBase.MaxNumOfMoves)
                 break;
         }
         
@@ -123,11 +123,11 @@ public class Pokemon
 
         StatBoosts = new Dictionary<Stat, int>()
         {
-            {Stat.Attack,6 },
-            {Stat.Defnecse,6 },
-            {Stat.SpAttack,6 },
-            {Stat.SpDefense,6 },
-            {Stat.Speed,6 },
+            {Stat.Attack,0 },
+            {Stat.Defnecse,0 },
+            {Stat.SpAttack,0 },
+            {Stat.SpDefense,0 },
+            {Stat.Speed,0 },
         
         };
     }
@@ -225,7 +225,7 @@ public class Pokemon
 
     public void LearnMove(MoveBase moveToLearn)
     {
-        if (Moves.Count > PokemonBase.MaxNumOfMvoes)
+        if (Moves.Count > PokemonBase.MaxNumOfMoves)
             return;
 
         Moves.Add(new Move(moveToLearn));

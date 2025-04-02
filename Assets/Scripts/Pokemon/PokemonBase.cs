@@ -73,7 +73,7 @@ public class PokemonBase : ScriptableObject
     [SerializeField] List<LearnableMove> learnableMoves;
     [SerializeField] List<MoveBase> learnableByItems;
 
-    public static int MaxNumOfMvoes { get; set; } = 4;
+    public static int MaxNumOfMoves { get; set; } = 4;
     public int GetExpForLevel(int level)
     {
         if(growthRate == GrowthRate.Fast)

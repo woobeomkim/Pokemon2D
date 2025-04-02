@@ -199,7 +199,7 @@ public class InventoryUI : MonoBehaviour
         }
         else
         {
-            if (usedItem is RecoveryItem)
+            if (selectedCategory == (int)ItemCategory.Items)
                 yield return DialogManager.Instance.ShowDialogText("효과가 없는 아이템 입니다.");
         }
 
@@ -226,7 +226,7 @@ public class InventoryUI : MonoBehaviour
             yield break;
         }
 
-        if(pokemon.Moves.Count < PokemonBase.MaxNumOfMvoes)
+        if(pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
         {
             pokemon.LearnMove(tmItem.Move);
             yield return DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name}(이)가 {tmItem.Move.Name}을 배웠다!");
@@ -320,7 +320,7 @@ public class InventoryUI : MonoBehaviour
 
         DialogManager.Instance.CloseDialog();
         moveSelectionUI.gameObject.SetActive(false);
-        if (moveIndex == PokemonBase.MaxNumOfMvoes)
+        if (moveIndex == PokemonBase.MaxNumOfMoves)
         {
             // 기술을 배우지않는다
             yield return(DialogManager.Instance.ShowDialogText($"{pokemon.Base.Name} (이)가 {moveToLearn.Name}을 배우지 않았다!"));

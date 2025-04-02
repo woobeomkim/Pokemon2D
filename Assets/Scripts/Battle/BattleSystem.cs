@@ -449,7 +449,7 @@ public class BattleSystem : MonoBehaviour
                 var newMove = playerUnit.Pokemon.GetLearnableMoveAtCurrLevel();
                 if( newMove != null)
                 {
-                    if (playerUnit.Pokemon.Moves.Count  < PokemonBase.MaxNumOfMvoes)
+                    if (playerUnit.Pokemon.Moves.Count  < PokemonBase.MaxNumOfMoves)
                     {
                         playerUnit.Pokemon.LearnMove(newMove.Base);
                         yield return dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {newMove.Base.Name}을 배웠다!");
@@ -557,7 +557,7 @@ public class BattleSystem : MonoBehaviour
             Action<int> onMoveSelected = (moveIndex) =>
             {
                 moveSelectionUI.gameObject.SetActive(false);
-                if(moveIndex == PokemonBase.MaxNumOfMvoes)
+                if(moveIndex == PokemonBase.MaxNumOfMoves)
                 {
                     // 기술을 배우지않는다
                     StartCoroutine(dialogBox.TypeDialog($"{playerUnit.Pokemon.Base.Name} (이)가 {moveToLearn.Name}을 배우지 않았다!"));
