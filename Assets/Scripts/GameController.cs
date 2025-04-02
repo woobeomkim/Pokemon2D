@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
 
     GameState state;
 
-    GameState stateBeforePause;
+    GameState prevState;
     public static GameController Instance { get; private set; } 
 
     public SceneDetails CurrentScene { get; private set; }
@@ -58,6 +58,7 @@ public class GameController : MonoBehaviour
 
         DialogManager.Instance.OnShowDialog += () =>
         {
+            prevState = state;
             state = GameState.Dialog;
         };
 
@@ -65,7 +66,7 @@ public class GameController : MonoBehaviour
         {
 
             if(state == GameState.Dialog)
-                state = GameState.FreeRoam;
+                state = prevState;
         };
 
         menuController.OnBack += () => 
@@ -80,12 +81,12 @@ public class GameController : MonoBehaviour
     {
         if(pause)
         {
-            stateBeforePause = state;
+            prevState = state;
             state = GameState.Paused;
         }
         else
         {
-            state = stateBeforePause;
+            state = prevState;
         }
     }
 

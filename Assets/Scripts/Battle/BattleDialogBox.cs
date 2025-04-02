@@ -28,6 +28,7 @@ public class BattleDialogBox : MonoBehaviour
     {
         highlightedColor = GlobalSettings.i.HighlightedColor;
     }
+
     public void SetDialog(string dialog)
     {
         dialogText.text = dialog;

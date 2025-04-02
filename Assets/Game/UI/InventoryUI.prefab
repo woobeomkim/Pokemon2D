@@ -1704,6 +1704,7 @@ MonoBehaviour:
   upArrow: {fileID: 538423209854073210}
   downArrow: {fileID: 8048014076826144491}
   partyScreen: {fileID: 1992167591113918801, guid: 9655599db71d2fe438b7656cd4dbba45, type: 3}
+  moveSelectionUI: {fileID: 1460266745767311313, guid: dd501af5fe7b6284ab0346274350fd39, type: 3}
 --- !u!1 &5255869782324540760
 GameObject:
   m_ObjectHideFlags: 0
