@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 8052328270146477076}
   - component: {fileID: 8612545565906826787}
   - component: {fileID: 647981921311932200}
+  - component: {fileID: 4132437732834749346}
+  - component: {fileID: 4962715662451956043}
   m_Layer: 10
   m_Name: NPC
   m_TagString: Untagged
@@ -174,11 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialog:
-    lines:
-    - "\u314E\u3147 \u314B\u314B"
-    - "\uB0B4\uC77C\uBD80\uD130 0923\uAC00\uC988\uC544"
-    - "\uD558 \uB0B4\uC77C\uBD80\uD130 \uC9C4\uC9DC\uBCF4\uC5EC\uC904\uAC8C"
-    - "\uACE03\uC2DC\uC808\uB85C\uB3CC\uC544\uAC04\uB2E4.."
+    lines: []
   movementPattern:
   - {x: 0, y: -2}
   - {x: 2, y: 0}
@@ -231,3 +229,32 @@ MonoBehaviour:
   - {fileID: -1754721246, guid: c6ad74a239bd0c04b8ba1197b4807349, type: 3}
   - {fileID: -761613174, guid: c6ad74a239bd0c04b8ba1197b4807349, type: 3}
   defaultDirection: 1
+--- !u!114 &4132437732834749346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7395894696204651882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3697339ac18133b41a6cc408ffc0b1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  count: 1
+  dialog:
+    lines: []
+--- !u!114 &4962715662451956043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7395894696204651882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4881f89f8b930e34489bbb86116ccd4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 
