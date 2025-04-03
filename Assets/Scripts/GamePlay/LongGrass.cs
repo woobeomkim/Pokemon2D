@@ -5,6 +5,7 @@ using UnityEngine.TextCore.Text;
 
 public class LongGrass : MonoBehaviour, IPlayerTriggerable
 {
+
     public void OnPlayerTriggered(PlayerController player)
     {
         if (UnityEngine.Random.Range(1, 101) <= 10)
@@ -14,4 +15,5 @@ public class LongGrass : MonoBehaviour, IPlayerTriggerable
             GameController.Instance.StartBattle();
         }
     }
+    public bool TriggerRepeatedly => true;
 }

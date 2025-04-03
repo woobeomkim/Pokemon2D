@@ -7039,6 +7039,9 @@ MonoBehaviour:
   portalLayer:
     serializedVersion: 2
     m_Bits: 8192
+  triggersLayer:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!114 &9186658051885595179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9989,8 +9992,6 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 94a4a6e2b567b8743a3fb699dbc967d7, type: 2}
     count: 1
   - item: {fileID: 11400000, guid: 757fdc6bea31a7547a7ff223595a6daf, type: 2}
-    count: 1
-  - item: {fileID: 11400000, guid: d8bfdb99ead1cc140b5b4504f0c64c72, type: 2}
     count: 1
 --- !u!1 &4241902757703850895
 GameObject:
