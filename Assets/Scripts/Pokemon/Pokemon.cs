@@ -236,6 +236,17 @@ public class Pokemon
         return Moves.Count(m => m.Base == moveToCheck) > 0;
     }
 
+    public Evolution CheckForEvolution()
+    {
+        var evolution = Base.Evolutions.Where(x => x.RequiredLevel == level).FirstOrDefault();
+        return evolution;
+    }
+
+    public void Evolve(Evolution evolution)
+    {
+        _base = evolution.EvolvesInto;
+        CalculateStats();
+    }
     // 포켓몬 스탯공식
     // https://bulbapedia.bulbagarden.net/wiki/Stat#Stat_modifiers 
     // 참고

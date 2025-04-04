@@ -20967,6 +20967,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9015552166905022838, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: pokemons.Array.data[0].level
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
