@@ -203,7 +203,7 @@ public class Evolution
 {
     [SerializeField] PokemonBase evolvesInto;
     [SerializeField] int requiredLevel;
-
+    [SerializeField] EvolutionItem requiredItem;
     public PokemonBase EvolvesInto
     {
         get { return evolvesInto; }
@@ -212,6 +212,10 @@ public class Evolution
     public int RequiredLevel
     {
         get { return requiredLevel; }
+    }
+    public ItemBase RequiredItem
+    {
+        get { return requiredItem; }
     }
 }
 

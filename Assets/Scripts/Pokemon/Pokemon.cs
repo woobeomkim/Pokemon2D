@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 // 클래스를 직렬화할때
 [System.Serializable]
@@ -118,18 +119,11 @@ public class Pokemon
         Stats.Add(Stat.SpAttack, Mathf.FloorToInt((Base.SpAttack * Level) / 100f) + 5);
         Stats.Add(Stat.SpDefense, Mathf.FloorToInt((Base.SpDefense * Level) / 100f) + 5);
         Stats.Add(Stat.Speed, Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5);
-    
+
+        int oldMaxHP = MaxHp;
         MaxHp = Mathf.FloorToInt((Base.MaxHp * Level) / 100f) + 10 + Level;
 
-        StatBoosts = new Dictionary<Stat, int>()
-        {
-            {Stat.Attack,0 },
-            {Stat.Defnecse,0 },
-            {Stat.SpAttack,0 },
-            {Stat.SpDefense,0 },
-            {Stat.Speed,0 },
-        
-        };
+        HP += (MaxHp - oldMaxHP);
     }
 
     void ResetStatBoost()
@@ -212,6 +206,7 @@ public class Pokemon
         if (Exp > Base.GetExpForLevel(level + 1))
         {
             ++level;
+            CalculateStats();
             return true;
         }
 
@@ -238,7 +233,13 @@ public class Pokemon
 
     public Evolution CheckForEvolution()
     {
-        var evolution = Base.Evolutions.Where(x => x.RequiredLevel == level).FirstOrDefault();
+        var evolution = Base.Evolutions.Where(x => x.RequiredLevel <= level).FirstOrDefault();
+        return evolution;
+    }
+
+    public Evolution CheckForEvolution(ItemBase item)
+    {
+        var evolution = Base.Evolutions.Where(x => x.RequiredItem == item).FirstOrDefault();
         return evolution;
     }
 

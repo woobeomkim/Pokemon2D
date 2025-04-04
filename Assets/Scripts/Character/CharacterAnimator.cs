@@ -62,6 +62,7 @@ public class CharacterAnimator : MonoBehaviour
 
         if (IsMoving)
             currentAnim.HandleUpdate();
+
         else
             spriteRenderer.sprite = currentAnim.Frames[0];
 

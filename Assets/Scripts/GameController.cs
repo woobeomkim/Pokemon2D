@@ -13,6 +13,7 @@ public enum GameState
     Bag,
     Cutscene,
     Paused,
+    Evolution,
 }
 
 public class GameController : MonoBehaviour
@@ -26,6 +27,7 @@ public class GameController : MonoBehaviour
     GameState state;
 
     GameState prevState;
+    GameState prevBeforeEvolution;
     public static GameController Instance { get; private set; } 
 
     public SceneDetails CurrentScene { get; private set; }
@@ -77,6 +79,18 @@ public class GameController : MonoBehaviour
         };
 
         menuController.OnMenuSelected += OnMenuSelected;
+
+        EvolutionManager.i.OnStartEvolution += () =>
+        {
+            prevBeforeEvolution = state;
+            state = GameState.Evolution;
+        };
+
+        EvolutionManager.i.OnCompleteEvolution += () =>
+        {
+                state = prevBeforeEvolution;
+                partyScreen.SetPartyData();
+        };
     }
 
     public void PausedGame(bool pause)
@@ -137,6 +151,9 @@ public class GameController : MonoBehaviour
             trainer.BattleLost();
             trainer = null; 
         }
+
+        partyScreen.SetPartyData();
+
         state = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(true);

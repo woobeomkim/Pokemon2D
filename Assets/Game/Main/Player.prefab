@@ -279,8 +279,8 @@ MonoBehaviour:
     count: 6
   - item: {fileID: 11400000, guid: 38409b9e3b07e984e83115f85cfd514e, type: 2}
     count: 5
-  - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
-    count: 2
+  - item: {fileID: 11400000, guid: ad72ae97d4395dc45a21768ca4990fee, type: 2}
+    count: 1
   - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
     count: 2
   - item: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
