@@ -15,3 +15,6 @@ MonoBehaviour:
   name: "\uBAAC\uC2A4\uD130\uBCFC"
   description: "\uD3EC\uCF13\uBAAC\uC744 \uC7A1\uAE30\uC704\uD55C \uBAAC\uC2A4\uD130\uBCFC"
   icon: {fileID: -749376736, guid: f64ca9a0e50d2214aa7054deb58e16bc, type: 3}
+  price: 500
+  isSellable: 0
+  catchRateModfier: 1

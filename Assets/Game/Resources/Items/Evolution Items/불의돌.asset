@@ -15,3 +15,5 @@ MonoBehaviour:
   name: "\uBD88\uC758\uB3CC"
   description: "\uD2B9\uC815\uD3EC\uCF13\uBAAC\uC744 \uC9C4\uD654\uC2DC\uD0A8\uB2E4"
   icon: {fileID: 1404270246, guid: 3ae12697ae504414bbf0797ea36dfddd, type: 3}
+  price: 5000
+  isSellable: 0
