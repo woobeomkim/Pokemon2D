@@ -14,6 +14,8 @@ public enum GameState
     Cutscene,
     Paused,
     Evolution,
+    Shop,
+
 }
 
 public class GameController : MonoBehaviour
@@ -90,6 +92,16 @@ public class GameController : MonoBehaviour
         {
                 state = prevBeforeEvolution;
                 partyScreen.SetPartyData();
+        };
+
+        ShopController.i.OnStart += () =>
+        {
+            state = GameState.Shop;
+        };
+
+        ShopController.i.OnFinish += () =>
+        {
+            state = GameState.FreeRoam;
         };
     }
 
@@ -210,6 +222,10 @@ public class GameController : MonoBehaviour
             };
 
             inventoryUI.HandleUpdate(onBack);
+        }
+        else if(state == GameState.Shop)
+        {
+            ShopController.i.HandleUpdate();
         }
         
 
