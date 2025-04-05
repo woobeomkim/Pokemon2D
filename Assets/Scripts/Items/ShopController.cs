@@ -52,7 +52,7 @@ public class ShopController : MonoBehaviour
             //BUY
             state = ShopState.Buying;
             walletUI.Show();
-            shopUI.Show(merchant.AvailableItems);
+            shopUI.Show(merchant.AvailableItems, (item) => StartCoroutine(BuyItem(item)) , OnBackFromBuying);
         }
         else if (selectedChoice == 1)
         {
@@ -137,5 +137,52 @@ public class ShopController : MonoBehaviour
         walletUI.Close();
 
         state = ShopState.Selling;
+    }
+
+    IEnumerator BuyItem(ItemBase item)
+    {
+        state = ShopState.Busy;
+        yield return DialogManager.Instance.ShowDialogText($"몇개를 사시겠습니까?",
+                waitForInput: false, autoClose: false);
+    
+        int countToBuy = 1;
+        yield return countSelectorUI.ShowSelector(100, item.Price,
+            (selectedCount) => { countToBuy = selectedCount; });
+    
+        DialogManager.Instance.CloseDialog();
+
+        float totalPrice = item.Price* countToBuy;
+    
+        if(Wallet.i.HasMoney(totalPrice))
+        {
+            int selectedChoice = 0;
+            yield return DialogManager.Instance.ShowDialogText($"가격은 {totalPrice}입니다! 사시겠습니까?",
+                waitForInput: false,
+                choices: new List<string>() { "산다", "안산다" },
+                onChoiceSelected: choiceIndex => selectedChoice = choiceIndex);
+     
+            if(selectedChoice == 0)
+            {
+                inventory.AddItem(item, countToBuy);
+                Wallet.i.TakeMoney(totalPrice);
+                yield return DialogManager.Instance.ShowDialogText($"{item.Name}을 사고 {totalPrice}를 지불했다");
+            }
+            else
+            {
+
+            }
+            state = ShopState.Buying;
+        }
+        else
+        {
+            yield return DialogManager.Instance.ShowDialogText("돈이 부족합니다.");  
+        }
+    }
+
+    void OnBackFromBuying()
+    {
+        shopUI.Close();
+        walletUI.Close();
+        StartCoroutine(StartMenuState());
     }
 }
