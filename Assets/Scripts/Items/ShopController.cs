@@ -8,6 +8,7 @@ public enum ShopState {Menu,Buying,Selling,Busy }
 public class ShopController : MonoBehaviour
 {
     [SerializeField] InventoryUI inventoryUI;
+    [SerializeField] WalletUI walletUI;
 
     public event Action OnStart;
     public event Action OnFinish;
@@ -85,7 +86,9 @@ public class ShopController : MonoBehaviour
             yield break;
         }
 
-       float sellingPrice = Mathf.Round(item.Price / 2);
+        walletUI.Show();
+
+        float sellingPrice = Mathf.Round(item.Price / 2);
         int selectedChoice = 0;
         yield return DialogManager.Instance.ShowDialogText($"가격은 {sellingPrice}입니다! 파시겠습니까?",
             waitForInput: false,
@@ -95,13 +98,15 @@ public class ShopController : MonoBehaviour
         if(selectedChoice ==0)
         {
             inventory.RemoveItem(item);
-            // TODO : Add money to player
+            Wallet.i.AddMoney(sellingPrice);
             yield return DialogManager.Instance.ShowDialogText($"{item.Name}을 넘기고 {sellingPrice}를 받았다");
         }
         else
         {
 
         }
+
+        walletUI.Close();
 
         state = ShopState.Selling;
     }
