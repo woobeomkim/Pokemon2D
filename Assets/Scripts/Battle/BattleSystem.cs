@@ -25,6 +25,11 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] MoveSelectionUI moveSelectionUI;
     [SerializeField] InventoryUI inventoryUI;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip wildBattleMusic;
+    [SerializeField] AudioClip trainerBattleMusic;
+    [SerializeField] AudioClip battleVictoryMusic;
+
     public event Action<bool> onBattleOver; //배틀종료이벤트
 
     BattleState state; // 현재배틀상태
@@ -51,6 +56,9 @@ public class BattleSystem : MonoBehaviour
         this.wildPokemon = wildPokemon;
 
         player = playerParty.GetComponent<PlayerController>();
+
+        AudioManager.i.PlayMusic(wildBattleMusic);
+
         StartCoroutine(SetupBattle());
     }
 
@@ -63,7 +71,7 @@ public class BattleSystem : MonoBehaviour
         player = playerParty.GetComponent<PlayerController>();
         trainer = trainerParty.GetComponent<TrainerController>();
 
-
+        AudioManager.i.PlayMusic(trainerBattleMusic);
         StartCoroutine(SetupBattle());
     }
 
@@ -429,6 +437,13 @@ public class BattleSystem : MonoBehaviour
         
         if(!faintedUnit.IsPlayerUnit)
         {
+            bool battleWon = true;
+            if (isTrainerBattle)
+                battleWon = trainerParty.GetHealthPokemon() == null;
+
+            if(battleWon)
+                AudioManager.i.PlayMusic(battleVictoryMusic);
+
             //EXP Gain
             int expYield = faintedUnit.Pokemon.Base.ExpYield;
             int enemyLevel = faintedUnit.Pokemon.Level;

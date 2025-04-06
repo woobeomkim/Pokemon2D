@@ -311,14 +311,13 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 2cbc8f7db8f9bf148a580de255815277, type: 3}
   dialog:
     lines:
-    - "ai \u3131 ? 180\uB0B4\uC904\uAC8C.."
-    - "? \uD558 \uB610\uC2DC\uC791\uC774\uB124"
-    - "% \u314B\u314B \uC9C0\uC625\uC744\uBCF4\uC5EC\uC904\uAC8C"
-    - "\uC18D\uB3C4\uC758\uD55C\uACC4\uB97C \uBCF4\uC5EC\uC904\uAC8C \u314B\u314B"
+    - "\uD3EC\uCF13\uBAAC\uC138\uACC4\uB294 \uD56D\uC0C1\uD3C9\uD654\uB86D\uC9C0"
+    - "\uB108\uB294 \uC694\uC998\uC5B4\uB54C"
   dialogAfterBattle:
     lines: []
   exclamation: {fileID: 1897571956021025294}
   fov: {fileID: 8400313873860210760}
+  trainerAppearsClip: {fileID: 8300000, guid: b2bc6c070e6972049af79c7b18cf481e, type: 3}
 --- !u!114 &2999116089923009275
 MonoBehaviour:
   m_ObjectHideFlags: 0

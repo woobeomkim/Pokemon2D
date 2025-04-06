@@ -48,6 +48,12 @@ public class ShopUI : MonoBehaviour
 
     public void HandleUpdate()
     {
+        if (availableItems == null || availableItems.Count == 0)
+        {
+            Debug.LogWarning("HandleUpdate: availableItems가 null이거나 비어 있음");
+            return;
+        }
+
         var prevSelection = selectedItem;
 
         if (Input.GetKeyDown(KeyCode.DownArrow))

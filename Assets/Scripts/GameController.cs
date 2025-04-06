@@ -92,6 +92,8 @@ public class GameController : MonoBehaviour
         {
                 state = prevBeforeEvolution;
                 partyScreen.SetPartyData();
+
+                AudioManager.i.PlayMusic(CurrentScene.SceneMusic, fade: true);
         };
 
         ShopController.i.OnStart += () =>
@@ -171,7 +173,12 @@ public class GameController : MonoBehaviour
         worldCamera.gameObject.SetActive(true);
 
         var playerParty = playerController.GetComponent<PokemonParty>();
-        StartCoroutine(playerParty.CheckForEvolutions());
+        bool hasEvolutions = playerParty.CheckForEvolutions();
+
+        if (hasEvolutions)
+            StartCoroutine(playerParty.RunEvolutions());
+        else
+            AudioManager.i.PlayMusic(CurrentScene.SceneMusic , fade : true);
     }
 
     private void Update()
@@ -265,5 +272,17 @@ public class GameController : MonoBehaviour
         }
 
        
+    }
+
+    public IEnumerator MoveCamera(Vector3 moveOffSet, bool waitForFadeOut = false)
+    {
+        yield return Fader.i.FadeIn(0.5f);
+
+        worldCamera.transform.position += moveOffSet;
+        
+        if(waitForFadeOut)
+            yield return Fader.i.FadeOut(0.5f);
+        else
+            StartCoroutine(Fader.i.FadeOut(0.5f));
     }
 }
