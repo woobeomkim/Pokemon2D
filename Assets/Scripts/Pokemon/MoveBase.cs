@@ -24,6 +24,7 @@ public class MoveBase : ScriptableObject
     [SerializeField] List<secondaryEffects> secondaries;
     [SerializeField] MoveTarget target;
 
+    [SerializeField] AudioClip sound;
     public string Name
     {
         get { return name; }
@@ -82,6 +83,8 @@ public class MoveBase : ScriptableObject
     {
         get { return target; }
     }
+
+    public AudioClip Sound => sound;
 }
 
 // 1차효과 ( 울음소리, 버프기)

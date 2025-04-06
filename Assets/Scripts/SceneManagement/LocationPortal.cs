@@ -30,6 +30,7 @@ public class LocationPortal : MonoBehaviour, IPlayerTriggerable
         yield return fader.FadeIn(0.5f);
 
         var desPortal = FindObjectsOfType<LocationPortal>().First(x => x != this && x.destinationPortal == this.destinationPortal);
+        
         player.Character.SetPositionAndSnapToTile(desPortal.SpawnPoint.position);
 
         yield return fader.FadeOut(0.5f);

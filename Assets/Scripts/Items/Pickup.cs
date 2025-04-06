@@ -20,6 +20,7 @@ public class Pickup : MonoBehaviour, Interactable, ISavable
             GetComponent<SpriteRenderer>().enabled = false;
             GetComponent<BoxCollider2D>().enabled = false;
 
+            AudioManager.i.PlaySfx(AudioId.ItemObatained, pauseMusic: true);
             yield return DialogManager.Instance.ShowDialogText($"{initiator.GetComponent<PlayerController>().Name} 이 {item.Name}을 발견했다!");
         }
         yield break;

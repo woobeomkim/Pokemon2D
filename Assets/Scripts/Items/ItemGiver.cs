@@ -18,6 +18,7 @@ public class ItemGiver : MonoBehaviour, ISavable
 
         used = true;
 
+        AudioManager.i.PlaySfx(AudioId.ItemObatained, pauseMusic: true);
         string dialogText = $"{player.Name}이 {item.Name}을 받았다";
         if(count > 1)
             dialogText = $"{player.Name}이 {item.Name} {count}개를 받았다";
