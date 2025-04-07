@@ -3003,6 +3003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119f6adb96cd60a4997a7d9530e79f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxList: []
   musicPlayer: {fileID: 3359512394768965494}
   sfxPlayer: {fileID: 6503748911823688744}
   fadeDuration: 0.75
@@ -4300,6 +4301,9 @@ MonoBehaviour:
   triggersLayer:
     serializedVersion: 2
     m_Bits: 16384
+  ledgeLayer:
+    serializedVersion: 2
+    m_Bits: 32768
 --- !u!114 &9186658051885595179
 MonoBehaviour:
   m_ObjectHideFlags: 0
