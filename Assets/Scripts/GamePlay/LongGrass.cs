@@ -12,7 +12,7 @@ public class LongGrass : MonoBehaviour, IPlayerTriggerable
         {
             //false로설정해야 encounter될때 애니메이션화가되지않음.
             player.Character.Animator.IsMoving = false;
-            GameController.Instance.StartBattle();
+            GameController.Instance.StartBattle(BattleTrigger.LongGrass);
         }
     }
     public bool TriggerRepeatedly => true;

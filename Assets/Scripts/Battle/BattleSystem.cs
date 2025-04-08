@@ -12,6 +12,8 @@ using UnityEngine.UI;
 // 배틀 진행상태를 enum 으로 정의
 public enum BattleState { Start, ActionSelection, MoveSelection ,RunningTurn,Busy,Bag,PartyScreen,AboutToUse , MoveForget,BattleOver}
 public enum BattleAction { Move,SwitchPokemon,UseItem,Run}
+
+public enum BattleTrigger { LongGrass, Water}
 // 배트시스템 전체를 관리
 public class BattleSystem : MonoBehaviour
 {
@@ -29,6 +31,13 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] AudioClip wildBattleMusic;
     [SerializeField] AudioClip trainerBattleMusic;
     [SerializeField] AudioClip battleVictoryMusic;
+
+    [Header("Bacground Images")]
+    [SerializeField] Image backgroundImage;
+    [SerializeField] Sprite grassBackground;
+    [SerializeField] Sprite waterBackground;
+
+
 
     public event Action<bool> onBattleOver; //배틀종료이벤트
 
@@ -48,8 +57,11 @@ public class BattleSystem : MonoBehaviour
     int escapeAttempts;
     MoveBase moveToLearn;
 
+    BattleTrigger battleTrigger;
+
     // 배틀시작메서드
-    public void StartBattle(PokemonParty playerPary, Pokemon wildPokemon)
+    public void StartBattle(PokemonParty playerPary, Pokemon wildPokemon, 
+        BattleTrigger trigger = BattleTrigger.LongGrass)
     {
         isTrainerBattle = false;
         this.playerParty = playerPary;
@@ -57,12 +69,15 @@ public class BattleSystem : MonoBehaviour
 
         player = playerParty.GetComponent<PlayerController>();
 
+        battleTrigger = trigger;
+
         AudioManager.i.PlayMusic(wildBattleMusic);
 
         StartCoroutine(SetupBattle());
     }
 
-    public void StartTrainerBattle(PokemonParty playerPary, PokemonParty trainerParty)
+    public void StartTrainerBattle(PokemonParty playerPary, PokemonParty trainerParty,
+        BattleTrigger trigger = BattleTrigger.LongGrass)
     {
         this.playerParty = playerPary;
         this.trainerParty = trainerParty;
@@ -80,6 +95,8 @@ public class BattleSystem : MonoBehaviour
     {
         playerUnit.Clear();
         enemyUnit.Clear();
+
+        backgroundImage.sprite = (battleTrigger == BattleTrigger.LongGrass) ? grassBackground : waterBackground;
 
         if (!isTrainerBattle)
         {

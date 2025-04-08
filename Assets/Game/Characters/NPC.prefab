@@ -176,7 +176,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialog:
-    lines: []
+    lines:
+    - "\uD3EC\uCF13\uBAAC \uC138\uACC4\uB294 \uD3C9\uD654\uB85C\uC6CC"
+  questToStart: {fileID: 0}
+  questToComplete: {fileID: 0}
   movementPattern:
   - {x: 0, y: -2}
   - {x: 2, y: 0}
@@ -228,6 +231,7 @@ MonoBehaviour:
   - {fileID: 811300478, guid: c6ad74a239bd0c04b8ba1197b4807349, type: 3}
   - {fileID: -1754721246, guid: c6ad74a239bd0c04b8ba1197b4807349, type: 3}
   - {fileID: -761613174, guid: c6ad74a239bd0c04b8ba1197b4807349, type: 3}
+  surfSprites: []
   defaultDirection: 1
 --- !u!114 &4132437732834749346
 MonoBehaviour:

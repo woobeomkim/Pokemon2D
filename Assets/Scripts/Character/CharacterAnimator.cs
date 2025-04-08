@@ -8,6 +8,7 @@ public class CharacterAnimator : MonoBehaviour
     [SerializeField] List<Sprite> walkUpSprites;
     [SerializeField] List<Sprite> walkRightSprites;
     [SerializeField] List<Sprite> walkLeftSprites;
+    [SerializeField] List<Sprite> surfSprites;
     [SerializeField] FacingDirection defaultDirection = FacingDirection.Down;
 
     // Parameters
@@ -16,6 +17,7 @@ public class CharacterAnimator : MonoBehaviour
     public bool IsMoving { get;set; }
 
     public bool IsJumping { get; set; }
+    public bool IsSurfing { get; set; }
 
     public FacingDirection DefaultDirection
     {
@@ -50,24 +52,39 @@ public class CharacterAnimator : MonoBehaviour
     {
         var prevAnim = currentAnim;
 
-        if (MoveX == 1)
-            currentAnim = walkRightAnim;
-        else if (MoveX == -1)
-            currentAnim = walkLeftAnim;        
-        else if (MoveY == 1)
-            currentAnim = walkUpAnim;
-        else if (MoveY == -1)
-            currentAnim = walkDownAnim;
+        if (!IsSurfing)
+        { 
+            if (MoveX == 1)
+                currentAnim = walkRightAnim;
+            else if (MoveX == -1)
+                currentAnim = walkLeftAnim;        
+            else if (MoveY == 1)
+                currentAnim = walkUpAnim;
+            else if (MoveY == -1)
+                currentAnim = walkDownAnim;
 
-        if (currentAnim != prevAnim || wasPreviouslyMoving != IsMoving)
-            currentAnim.Start();
+            if (currentAnim != prevAnim || wasPreviouslyMoving != IsMoving)
+                currentAnim.Start();
 
-        if(IsJumping)
-            spriteRenderer.sprite = currentAnim.Frames[currentAnim.Frames.Count - 1];
-        else if (IsMoving)
-            currentAnim.HandleUpdate();
+            if(IsJumping)
+                spriteRenderer.sprite = currentAnim.Frames[currentAnim.Frames.Count - 1];
+            else if (IsMoving)
+                currentAnim.HandleUpdate();
+            else
+                spriteRenderer.sprite = currentAnim.Frames[0];
+        }
         else
-            spriteRenderer.sprite = currentAnim.Frames[0];
+        {
+
+            if (MoveX == 1)
+                spriteRenderer.sprite = surfSprites[2];
+            else if (MoveX == -1)
+                spriteRenderer.sprite = surfSprites[3];
+            else if (MoveY == 1)
+                spriteRenderer.sprite = surfSprites[1];
+            else if (MoveY == -1)
+                spriteRenderer.sprite = surfSprites[0];
+        }
 
         wasPreviouslyMoving = IsMoving;
     }

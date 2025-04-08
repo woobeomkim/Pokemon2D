@@ -53,8 +53,11 @@ public class Character : MonoBehaviour
 
         if(!IsPathClear(targetPos))
             yield break;
-        else
-            IsMoving = true;
+      
+        if(animator.IsSurfing && Physics2D.OverlapCircle(targetPos,0.3f,GameLayers.i.WaterLayer) == null)
+            animator.IsSurfing = false;
+
+        IsMoving = true;
 
         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
@@ -88,7 +91,13 @@ public class Character : MonoBehaviour
         Physics2D.BoxCast()는 박스(사각형)를 특정 방향으로 이동시키면서 충돌 검사를 수행하는 함수입니다.
         즉, 캐릭터가 이동할 경로에 장애물이 있는지 체크하는 역할을 합니다.
          */
-        if (Physics2D.BoxCast(transform.position + dir, new Vector2(0.2f, 0.2f), 0f, dir, diff.magnitude - 1, GameLayers.i.SolidLayer | GameLayers.i.InteractableLayer|GameLayers.i.PlayerLayer))
+
+        var collisionLayer = GameLayers.i.SolidLayer | GameLayers.i.InteractableLayer | GameLayers.i.PlayerLayer;
+
+        if (!animator.IsSurfing)
+            collisionLayer = collisionLayer | GameLayers.i.WaterLayer;
+
+        if (Physics2D.BoxCast(transform.position + dir, new Vector2(0.2f, 0.2f), 0f, dir, diff.magnitude - 1, collisionLayer)) 
             return false;
 
         return true;

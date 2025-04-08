@@ -4304,6 +4304,9 @@ MonoBehaviour:
   ledgeLayer:
     serializedVersion: 2
     m_Bits: 32768
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 16
 --- !u!114 &9186658051885595179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9764,6 +9767,9 @@ MonoBehaviour:
   wildBattleMusic: {fileID: 8300000, guid: a012432b3ff05fa458b51644b6af0ee3, type: 3}
   trainerBattleMusic: {fileID: 8300000, guid: 06a73830b7e40314abe4b5ce3c31ba08, type: 3}
   battleVictoryMusic: {fileID: 8300000, guid: d0c8167572dc1bc4390af30376e25d20, type: 3}
+  backgroundImage: {fileID: 9051753420478150117}
+  grassBackground: {fileID: 4422032505096542742, guid: 5e92e4381a92d5649bd2246f7decdb7b, type: 3}
+  waterBackground: {fileID: 1106511937541109406, guid: 5e92e4381a92d5649bd2246f7decdb7b, type: 3}
 --- !u!1 &6889327472681725857
 GameObject:
   m_ObjectHideFlags: 0
@@ -13858,9 +13864,53 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6520028084478026523, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: surfSprites.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520028084478026523, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: surfSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: -4465137455631916842, guid: 14ced2238d82c7149b8f5a0481222249, type: 3}
+    - target: {fileID: 6520028084478026523, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: surfSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 548946438817077065, guid: 14ced2238d82c7149b8f5a0481222249, type: 3}
+    - target: {fileID: 6520028084478026523, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: surfSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 4472088847651303106, guid: 14ced2238d82c7149b8f5a0481222249, type: 3}
+    - target: {fileID: 6520028084478026523, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: surfSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 6356773947664160301, guid: 14ced2238d82c7149b8f5a0481222249, type: 3}
+    - target: {fileID: 6520028084478026523, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: surfSprites.Array.data[4]
+      value: 
+      objectReference: {fileID: -4465137455631916842, guid: 14ced2238d82c7149b8f5a0481222249, type: 3}
+    - target: {fileID: 6520028084478026523, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: surfSprites.Array.data[5]
+      value: 
+      objectReference: {fileID: 548946438817077065, guid: 14ced2238d82c7149b8f5a0481222249, type: 3}
+    - target: {fileID: 6520028084478026523, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: surfSprites.Array.data[6]
+      value: 
+      objectReference: {fileID: 4472088847651303106, guid: 14ced2238d82c7149b8f5a0481222249, type: 3}
+    - target: {fileID: 6520028084478026523, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: surfSprites.Array.data[7]
+      value: 
+      objectReference: {fileID: 6356773947664160301, guid: 14ced2238d82c7149b8f5a0481222249, type: 3}
     - target: {fileID: 9015552166905022838, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
       propertyPath: pokemons.Array.data[0].level
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015552166905022838, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: pokemons.Array.data[1]._base
+      value: 
+      objectReference: {fileID: 11400000, guid: 2bcc44ce70150514c8ea501a5bc89143, type: 2}
+    - target: {fileID: 9015552166905022838, guid: e84d97a495546c24c84d2b08a399a208, type: 3}
+      propertyPath: pokemons.Array.data[1].level
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
