@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour, ISavable
     private Character character;
     private Vector2 input;
 
+    public static PlayerController i { get; set; }
+
     public string Name
     {
         get => name;
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour, ISavable
 
     private void Awake()
     {
+        i = this;
         character = GetComponent<Character>();
     }
 

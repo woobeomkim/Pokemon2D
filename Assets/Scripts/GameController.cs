@@ -204,6 +204,11 @@ public class GameController : MonoBehaviour
             }
 
         }
+        else if(state == GameState.Cutscene)
+        {
+            playerController.Character.HandleUpdate();
+        }
+
         else if (state == GameState.Battle)
         {
             battleSystem.HandleUpdate();

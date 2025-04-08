@@ -14,7 +14,10 @@ public class Cutscene : MonoBehaviour , IPlayerTriggerable
         GameController.Instance.StartCutsceneState();
         foreach (var action in actions)
         {
-            yield return action.Play();
+            if(action.WaitForCompletion)
+                yield return action.Play();
+            else
+                StartCoroutine(action.Play());
         }
         GameController.Instance.StartFreeRoamState();
     }

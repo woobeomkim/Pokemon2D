@@ -6,6 +6,7 @@ using UnityEngine;
 public class CutsceneAction
 {
     [SerializeField] string name;
+    [SerializeField] bool waitForCompletion = true;
 
     public virtual IEnumerator Play()
     {
@@ -17,5 +18,7 @@ public class CutsceneAction
        get => name;
        set => name = value;
     }
-    
+
+    public bool WaitForCompletion => waitForCompletion;
+
 }
