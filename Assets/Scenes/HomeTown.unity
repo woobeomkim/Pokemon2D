@@ -3890,9 +3890,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions:
   - rid: 44860264618655748
+  - rid: 44860264618655755
+  - rid: 44860264618655754
   - rid: 44860264618655749
   - rid: 44860264618655751
   - rid: 44860264618655752
+  - rid: 44860264618655756
   references:
     version: 2
     RefIds:
@@ -3938,6 +3941,31 @@ MonoBehaviour:
         - {x: -1, y: 0}
         - {x: 0, y: -9}
         - {x: -4, y: 0}
+    - rid: 44860264618655754
+      type: {class: TurnActorAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: TurnActorAction
+        waitForCompletion: 1
+        actor:
+          isPlayer: 1
+          character: {fileID: 2857477973352169716}
+        direction: 1
+    - rid: 44860264618655755
+      type: {class: TurnActorAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: TurnActorAction
+        waitForCompletion: 1
+        actor:
+          isPlayer: 0
+          character: {fileID: 2857477973352169716}
+        direction: 0
+    - rid: 44860264618655756
+      type: {class: TeleportObjectAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: TeleportObjectAction
+        waitForCompletion: 1
+        go: {fileID: 1480775295}
+        position: {x: -5.5, y: 6.8}
 --- !u!4 &450731117
 Transform:
   m_ObjectHideFlags: 0
@@ -4670,6 +4698,11 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7240827468344602095, guid: d7136c64157e3fc419a24cb88cd5fc08, type: 3}
   m_PrefabInstance: {fileID: 8488635727091818495}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1480775295 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7395894696204651882, guid: 861837bda2099a84f8af254ce371dff8, type: 3}
+  m_PrefabInstance: {fileID: 2857477973352169715}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1663679518
 GameObject:
@@ -12742,7 +12775,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8612545565906826787, guid: 861837bda2099a84f8af254ce371dff8, type: 3}
   m_PrefabInstance: {fileID: 2857477973352169715}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1480775295}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9f0e355ac12cbf498dd3a328f0b47fe, type: 3}
