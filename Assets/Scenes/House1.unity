@@ -188,7 +188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8052328270146477076, guid: 861837bda2099a84f8af254ce371dff8, type: 3}
       propertyPath: dialog.lines.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8052328270146477076, guid: 861837bda2099a84f8af254ce371dff8, type: 3}
       propertyPath: dialog.lines.Array.data[0]
@@ -223,9 +223,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe290f6dc20503442a13d5258e16ea0d, type: 2}
   - {fileID: 11400000, guid: 38409b9e3b07e984e83115f85cfd514e, type: 2}
   - {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
-  - {fileID: 11400000, guid: 539ac2a3c0338ae4d927df29192d58f5, type: 2}
-  - {fileID: 11400000, guid: 6f0656f717b4bc741bf75920552aaa38, type: 2}
-  - {fileID: 11400000, guid: ad72ae97d4395dc45a21768ca4990fee, type: 2}
+  - {fileID: 11400000, guid: 0bc489df7baed0c47b9b8333d2c7017f, type: 2}
 --- !u!1 &102670666
 GameObject:
   m_ObjectHideFlags: 0
@@ -1771,7 +1769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8052328270146477076, guid: 861837bda2099a84f8af254ce371dff8, type: 3}
       propertyPath: dialog.lines.Array.data[0]
-      value: "\uD3EC\uCF13\uBAAC\uC744 \uCE58\uB8CC\uD574\uC904\uAC8C"
+      value: "\uB3D9\uBB3C\uB4E4\uC744 \uCE58\uB8CC\uD574\uC904"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1816,12 +1814,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pokemonToGive:
-    _base: {fileID: 11400000, guid: 174c1bff26e1f2b459f8ae6ccbc0af36, type: 2}
+    _base: {fileID: 11400000, guid: 99a78273bd88d5c438ce240e91830c14, type: 2}
     level: 5
   dialog:
     lines:
-    - "\uD3EC\uCF13\uBAAC\uC740 \uC6B0\uB9AC\uC758\uCE5C\uAD6C"
-    - "\uB0B4\uCE5C\uAD6C \uD30C\uC544\uB9AC\uB97C\uC904\uAC8C"
+    - "\uB3D9\uBB3C\uC758\uC655 \uC0AC\uC790\uB97C \uC798\uD0A4\uC6CC\uBD10"
 --- !u!1001 &1186168991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2113,11 +2110,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 2a99e39ad1532e74b98d006818e80809, type: 2}
     - target: {fileID: 8052328270146477076, guid: 861837bda2099a84f8af254ce371dff8, type: 3}
       propertyPath: dialog.lines.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8052328270146477076, guid: 861837bda2099a84f8af254ce371dff8, type: 3}
       propertyPath: dialog.lines.Array.data[0]
-      value: "\uB0B4\uCE5C\uAD6C \uD30C\uC774\uB9AC \uC798\uB300\uD574\uC918"
+      value: "\uB3D9\uBB3C\uC758\uC655 \uC0AC\uC790\uB97C \uB108\uC5D0\uAC8C\uC904\uAC8C"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

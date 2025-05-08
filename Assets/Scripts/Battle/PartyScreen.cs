@@ -58,7 +58,7 @@ public class PartyScreen : MonoBehaviour
 
         UpdateMemeberSelection(selection);
 
-        messageText.text = "포켓몬을 고르세요!";
+        messageText.text = "동물을 고르세요!";
     }
 
     public void HandleUpdate(Action onSelected, Action onBack)

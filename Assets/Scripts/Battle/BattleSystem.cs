@@ -190,7 +190,7 @@ public class BattleSystem : MonoBehaviour
     IEnumerator AboutToUse(Pokemon newPokemon)
     {
         state = BattleState.Busy;
-        yield return StartCoroutine(dialogBox.TypeDialog($"{trainer.Name}(이)가 {newPokemon.Base.Name}을 사용하려합니다. 포켓몬을 바꾸시겠습니까 ?"));
+        yield return StartCoroutine(dialogBox.TypeDialog($"{trainer.Name}(이)가 {newPokemon.Base.Name}을 사용하려합니다. 동물을 바꾸시겠습니까 ?"));
         state = BattleState.AboutToUse;
 
         dialogBox.EnableChoiceBox(true);
@@ -840,7 +840,7 @@ public class BattleSystem : MonoBehaviour
 
         if(isTrainerBattle)
         {
-            yield return dialogBox.TypeDialog($"트레이너의 포켓몬에게는 던질수없다!");
+            yield return dialogBox.TypeDialog($"트레이너의 동물에게는 던질수없다!");
             state = BattleState.RunningTurn;
             yield break;
         }

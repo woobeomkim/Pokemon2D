@@ -140,12 +140,16 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: deb9b51fbcb34654f843a0164b048215, type: 3}
     - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
       propertyPath: connectedScenes.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
       propertyPath: connectedScenes.Array.data[0]
       value: 
       objectReference: {fileID: 1711829329}
+    - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: connectedScenes.Array.data[1]
+      value: 
+      objectReference: {fileID: 1997316360}
     - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -32.83
@@ -428,6 +432,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1171364037632299194, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: pokemons.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1259687443461755042, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -708,6 +716,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2398586947887949922, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: wildBattleMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 2ca05c97956ae2545abb858abe075198, type: 3}
+    - target: {fileID: 2398586947887949922, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: trainerBattleMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 2ca05c97956ae2545abb858abe075198, type: 3}
     - target: {fileID: 2445863163390336585, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1152,6 +1168,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4852975729309875754, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: slots.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4852975729309875754, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: pokeballSlots.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4852975729309875754, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: slots.Array.data[2].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 1a27241d09812a24b8931f7d21923ee6, type: 2}
+    - target: {fileID: 4852975729309875754, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: slots.Array.data[5].item
+      value: 
+      objectReference: {fileID: 11400000, guid: ad72ae97d4395dc45a21768ca4990fee, type: 2}
+    - target: {fileID: 4852975729309875754, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: slots.Array.data[2].count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4852975729309875754, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: slots.Array.data[5].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4852975729309875754, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+      propertyPath: pokeballSlots.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 0bc489df7baed0c47b9b8333d2c7017f, type: 2}
     - target: {fileID: 5067368560044304502, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1969,6 +2013,44 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2c0b2ba06b7407438080115ec118b22, type: 3}
+--- !u!1 &918389965 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1141884323444591552, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+  m_PrefabInstance: {fileID: 1139239835}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &918389966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918389965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05652a0a09e0d9b42a4024135377c92a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildPokemons:
+  - pokemon: {fileID: 11400000, guid: 1416aa40d6daa6a42bdb231ff38fbd26, type: 2}
+    levelRange: {x: 5, y: 8}
+    chancePercentage: 100
+  - pokemon: {fileID: 0}
+    levelRange: {x: 0, y: 0}
+    chancePercentage: 0
+  wildPokemonsInWater: []
+  totalChance: 100
+  totalChanceInWater: -1
+--- !u!114 &918389967 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+  m_PrefabInstance: {fileID: 1139239835}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918389965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f084934356c67584286bc2d739187660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &918534020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1979,15 +2061,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1141884323444591552, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
       propertyPath: m_Name
-      value: Route1
+      value: Jungle
       objectReference: {fileID: 0}
     - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
       propertyPath: sceneMusic
       value: 
-      objectReference: {fileID: 8300000, guid: e9a1d698af9d9ba4c9340300d2c08189, type: 3}
+      objectReference: {fileID: 8300000, guid: 0dc9f56f2a69a1444bbfad8fc8eef0c7, type: 3}
     - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
       propertyPath: connectedScenes.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
       propertyPath: connectedScenes.Array.data[0]
@@ -1997,6 +2079,10 @@ PrefabInstance:
       propertyPath: connectedScenes.Array.data[1]
       value: 
       objectReference: {fileID: 348406370}
+    - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: connectedScenes.Array.data[2]
+      value: 
+      objectReference: {fileID: 918389967}
     - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.31
@@ -2140,6 +2226,78 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f084934356c67584286bc2d739187660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1139239835
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1141884323444591552, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_Name
+      value: Desert
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: sceneMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: bf2b8989295db244daf75fa385f91a5a, type: 3}
+    - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: connectedScenes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: connectedScenes.Array.data[0]
+      value: 
+      objectReference: {fileID: 1711829329}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 41.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1141884323444591552, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 918389966}
+  m_SourcePrefab: {fileID: 100100000, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
 --- !u!1 &1205216126 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1141884323444591552, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
@@ -2158,12 +2316,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wildPokemons:
-  - pokemon: {fileID: 11400000, guid: 65a4b4ab26df8374fb9ce52149889a1d, type: 2}
+  - pokemon: {fileID: 11400000, guid: 99a78273bd88d5c438ce240e91830c14, type: 2}
     levelRange: {x: 15, y: 18}
-    chancePercentage: 20
-  - pokemon: {fileID: 11400000, guid: 174c1bff26e1f2b459f8ae6ccbc0af36, type: 2}
+    chancePercentage: 50
+  - pokemon: {fileID: 11400000, guid: 46c7d9af09f9f2041aaaac0aa2693715, type: 2}
     levelRange: {x: 1, y: 5}
-    chancePercentage: 80
+    chancePercentage: 50
   wildPokemonsInWater:
   - pokemon: {fileID: 11400000, guid: 2bcc44ce70150514c8ea501a5bc89143, type: 2}
     levelRange: {x: 5, y: 9}
@@ -2253,18 +2411,128 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wildPokemons:
-  - pokemon: {fileID: 11400000, guid: 65a4b4ab26df8374fb9ce52149889a1d, type: 2}
-    levelRange: {x: 16, y: 22}
+  - pokemon: {fileID: 11400000, guid: 580548f93a5140c4795b2d30452585a3, type: 2}
+    levelRange: {x: 1, y: 2}
     chancePercentage: 30
-  - pokemon: {fileID: 11400000, guid: d87672542fe45c8428db26bcad147c40, type: 2}
-    levelRange: {x: 11, y: 16}
+  - pokemon: {fileID: 11400000, guid: 11ad689443fc6ad46970a9a6b8d2f5f2, type: 2}
+    levelRange: {x: 1, y: 2}
     chancePercentage: 30
-  - pokemon: {fileID: 11400000, guid: 16af68107431c5f448d37ab33b84c817, type: 2}
-    levelRange: {x: 3, y: 7}
+  - pokemon: {fileID: 11400000, guid: 99a78273bd88d5c438ce240e91830c14, type: 2}
+    levelRange: {x: 1, y: 2}
     chancePercentage: 40
   wildPokemonsInWater: []
   totalChance: 100
   totalChanceInWater: -1
+--- !u!1001 &1976480092
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1141884323444591552, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_Name
+      value: Cave
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: sceneMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 9fe20bcd42970064f8700127f400f6d3, type: 3}
+    - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: connectedScenes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: connectedScenes.Array.data[0]
+      value: 
+      objectReference: {fileID: 348406370}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -73.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 30.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668660661877082805, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1141884323444591552, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1997316359}
+  m_SourcePrefab: {fileID: 100100000, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+--- !u!1 &1997316358 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1141884323444591552, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+  m_PrefabInstance: {fileID: 1976480092}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1997316359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997316358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05652a0a09e0d9b42a4024135377c92a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildPokemons:
+  - pokemon: {fileID: 11400000, guid: 5a32ff4b56081cd46a2221b59e003200, type: 2}
+    levelRange: {x: 5, y: 8}
+    chancePercentage: 100
+  - pokemon: {fileID: 0}
+    levelRange: {x: 0, y: 0}
+    chancePercentage: 0
+  wildPokemonsInWater: []
+  totalChance: 100
+  totalChanceInWater: -1
+--- !u!114 &1997316360 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
+  m_PrefabInstance: {fileID: 1976480092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997316358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f084934356c67584286bc2d739187660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4924116985051567014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2280,7 +2548,7 @@ PrefabInstance:
     - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
       propertyPath: sceneMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 18156d0f07bcfae429d537e0702567bc, type: 3}
+      objectReference: {fileID: 8300000, guid: 2d5c3da0ace6c80409b33a4fd14d76d5, type: 3}
     - target: {fileID: 2064499516812252636, guid: b55e80d68e7bb3a44a338b8bf247844e, type: 3}
       propertyPath: connectedScenes.Array.size
       value: 2
@@ -2349,4 +2617,6 @@ SceneRoots:
   - {fileID: 982931147}
   - {fileID: 918534020}
   - {fileID: 289846371}
+  - {fileID: 1139239835}
+  - {fileID: 1976480092}
   - {fileID: 675369872}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\uB9E5\uC2A4\uD3EC\uC158"
   m_EditorClassIdentifier: 
   name: "\uB9E5\uC2A4\uD3EC\uC158"
-  description: "\uD3EC\uCF13\uBAAC\uC758 HP\uB97C \uC804\uBD80 \uD68C\uBCF5 \uD55C\uB2E4."
+  description: "\uB3D9\uBB3C\uC758 HP\uB97C \uC804\uBD80 \uD68C\uBCF5 \uD55C\uB2E4."
   icon: {fileID: -941956785, guid: a82f7bf058d291a4d93f6caae3671e46, type: 3}
   price: 1000
   isSellable: 1

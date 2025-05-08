@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/HomeTown.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Route1.unity
+    path: Assets/Scenes/Jungle.unity
     guid: abda9613e8e584b4c8801f3c69d4e6d9
   - enabled: 1
     path: Assets/Scenes/House1.unity
@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Town2.unity
     guid: c8f429b339577ec4a9ea2fbd939eafa5
+  - enabled: 1
+    path: Assets/Scenes/Desert.unity
+    guid: 4648989b71f414644a86b2739f5d67f7
+  - enabled: 1
+    path: Assets/Scenes/Cave.unity
+    guid: e1c1e0fd8a51e0647ab42634ca5750fe
   m_configObjects: {}

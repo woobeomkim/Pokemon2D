@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour, ISavable
     public static List<string> ItemCategorys { get; set; } = new List<string>()
     {
         "ITEMS",
-        "POKEBALLS",
+        "CAGE",
         "TMs & HMs"
     };
 
